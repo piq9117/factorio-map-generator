@@ -110,6 +110,7 @@ fn main() -> std::io::Result<()> {
             overload_multipliers: vec![0.0],
             negative_path_cache_delay_internal: 0,
         },
+        max_failed_behavior_count: 0,
     };
 
     serde_json::to_writer(file, &map_settings)?;
@@ -124,6 +125,7 @@ struct MapSettings<'a> {
     enemy_expansion: EnemyExpansionSettings,
     unit_group: UnitGroupSettings,
     path_finder: PathFinderSettings,
+    max_failed_behavior_count: u32,
 }
 
 impl<'a> Serialize for MapSettings<'a> {
@@ -139,6 +141,7 @@ impl<'a> Serialize for MapSettings<'a> {
         s.serialize_field("enemy_expension", &self.enemy_expansion)?;
         s.serialize_field("unit_group", &self.unit_group)?;
         s.serialize_field("path_finder", &self.path_finder)?;
+        s.serialize_field("max_failed_behavior_count", &self.max_failed_behavior_count)?;
         s.end()
     }
 }
