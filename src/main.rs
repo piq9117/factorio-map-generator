@@ -111,6 +111,10 @@ fn main() -> std::io::Result<()> {
             negative_path_cache_delay_internal: 0,
         },
         max_failed_behavior_count: 0,
+        asteriods: AsteriodSettings {
+            spawning_rate: 0.0,
+            max_ray_portals_expanded_per_tick: 0
+        }
     };
 
     serde_json::to_writer(file, &map_settings)?;
@@ -126,6 +130,7 @@ struct MapSettings<'a> {
     unit_group: UnitGroupSettings,
     path_finder: PathFinderSettings,
     max_failed_behavior_count: u32,
+    asteriods: AsteriodSettings
 }
 
 impl<'a> Serialize for MapSettings<'a> {
@@ -142,6 +147,7 @@ impl<'a> Serialize for MapSettings<'a> {
         s.serialize_field("unit_group", &self.unit_group)?;
         s.serialize_field("path_finder", &self.path_finder)?;
         s.serialize_field("max_failed_behavior_count", &self.max_failed_behavior_count)?;
+        s.serialize_field("asteriods", &self.asteriods)?;
         s.end()
     }
 }
@@ -528,6 +534,23 @@ impl Serialize for PathFinderSettings {
             "negative_path_cache_delay_internal",
             &self.negative_path_cache_delay_internal,
         )?;
+        s.end()
+    }
+}
+
+struct AsteriodSettings {
+    spawning_rate: f32,
+    max_ray_portals_expanded_per_tick: u32
+}
+
+impl Serialize for AsteriodSettings {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+      S: Serializer
+    {
+        let mut s = serializer.serialize_struct("AsteriodSettings", 2)?;
+        s.serialize_field("spawning_rate", &self.spawning_rate)?;
+        s.serialize_field("max_ray_portals_expanded_per_tick", &self.max_ray_portals_expanded_per_tick)?;
         s.end()
     }
 }
