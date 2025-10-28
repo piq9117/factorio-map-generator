@@ -73,8 +73,43 @@ fn main() -> std::io::Result<()> {
             member_disown_distance: 0.0,
             tick_tolerance_when_members_arrives: 0,
             max_gathering_unit_groups: 0,
-            max_unit_group_size: 0
-        }
+            max_unit_group_size: 0,
+        },
+        path_finder: PathFinderSettings {
+            fwd2bwd_ratio: 0,
+            goal_pressure_ratio: 0.0,
+            use_path_cache: false,
+            max_steps_worked_per_tick: 0.0,
+            max_work_done_per_tick: 0,
+            short_cache_size: 0,
+            long_cache_size: 0,
+            short_cache_min_cacheable_distance: 0.0,
+            short_cache_min_algo_steps_to_cache: 0,
+            long_cache_min_cacheable_distance: 0.0,
+            cache_max_connect_to_cache_steps_multiplier: 0,
+            cache_accept_path_start_distance_ratio: 0.0,
+            cache_accept_path_end_distance_ratio: 0.0,
+            negative_cache_accept_path_start_distance_ratio: 0.0,
+            negative_cache_accept_path_end_distance_ratio: 0.0,
+            cache_path_start_distance_rating_multiplier: 0.0,
+            cache_path_end_distance_rating_multiplier: 0.0,
+            stale_enemy_with_same_destination_collision_penalty: 0.0,
+            ignore_moving_enemy_collision_distance: 0.0,
+            enemy_with_different_destination_collision_penalty: 0.0,
+            general_entity_collision_penalty: 0.0,
+            general_entity_subsequent_collision_penalty: 0.0,
+            extended_collision_penalty: 0.0,
+            max_clients_to_accept_any_new_request: 0,
+            max_clients_to_accept_short_new_request: 0,
+            direct_distance_to_consider_short_request: 0,
+            short_request_max_steps: 0,
+            short_request_ratio: 0.0,
+            min_steps_to_check_path_find_termination: 0,
+            start_to_goal_cost_multiplier_to_terminate_path_find: 0.0,
+            overload_levels: vec![0],
+            overload_multipliers: vec![0.0],
+            negative_path_cache_delay_internal: 0,
+        },
     };
 
     serde_json::to_writer(file, &map_settings)?;
@@ -88,6 +123,7 @@ struct MapSettings<'a> {
     enemy_evolution: EnemyEvolutionSettings,
     enemy_expansion: EnemyExpansionSettings,
     unit_group: UnitGroupSettings,
+    path_finder: PathFinderSettings,
 }
 
 impl<'a> Serialize for MapSettings<'a> {
@@ -102,6 +138,7 @@ impl<'a> Serialize for MapSettings<'a> {
         s.serialize_field("enemy_evolution", &self.enemy_evolution)?;
         s.serialize_field("enemy_expension", &self.enemy_expansion)?;
         s.serialize_field("unit_group", &self.unit_group)?;
+        s.serialize_field("path_finder", &self.path_finder)?;
         s.end()
     }
 }
@@ -311,22 +348,183 @@ struct UnitGroupSettings {
 
 impl Serialize for UnitGroupSettings {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where S: Serializer
+    where
+        S: Serializer,
     {
         let mut s = serializer.serialize_struct("UnitGroupSettings", 13)?;
         s.serialize_field("min_group_gathering_time", &self.min_group_gathering_time)?;
         s.serialize_field("max_group_gathering_time", &self.max_group_gathering_time)?;
-        s.serialize_field("max_wait_time_for_late_members", &self.max_wait_time_for_late_members)?;
+        s.serialize_field(
+            "max_wait_time_for_late_members",
+            &self.max_wait_time_for_late_members,
+        )?;
         s.serialize_field("max_group_radius", &self.max_group_radius)?;
         s.serialize_field("min_group_radius", &self.min_group_radius)?;
-        s.serialize_field("max_member_speedup_when_behind", &self.max_member_speedup_when_behind)?;
-        s.serialize_field("max_member_slowdown_when_ahead", &self.max_member_slowdown_when_ahead)?;
+        s.serialize_field(
+            "max_member_speedup_when_behind",
+            &self.max_member_speedup_when_behind,
+        )?;
+        s.serialize_field(
+            "max_member_slowdown_when_ahead",
+            &self.max_member_slowdown_when_ahead,
+        )?;
         s.serialize_field("max_group_slowdown_factor", &self.max_group_slowdown_factor)?;
-        s.serialize_field("max_group_member_fallback_factor", &self.max_group_member_fallback_factor)?;
+        s.serialize_field(
+            "max_group_member_fallback_factor",
+            &self.max_group_member_fallback_factor,
+        )?;
         s.serialize_field("member_disown_distance", &self.member_disown_distance)?;
-        s.serialize_field("tick_tolerance_when_members_arrives", &self.tick_tolerance_when_members_arrives)?;
+        s.serialize_field(
+            "tick_tolerance_when_members_arrives",
+            &self.tick_tolerance_when_members_arrives,
+        )?;
         s.serialize_field("max_gathering_unit_groups", &self.max_gathering_unit_groups)?;
         s.serialize_field("max_unit_group_size", &self.max_unit_group_size)?;
+        s.end()
+    }
+}
+
+struct PathFinderSettings {
+    fwd2bwd_ratio: u32,
+    goal_pressure_ratio: f32,
+    use_path_cache: bool,
+    max_steps_worked_per_tick: f32,
+    max_work_done_per_tick: u32,
+    short_cache_size: u32,
+    long_cache_size: u32,
+    short_cache_min_cacheable_distance: f32,
+    short_cache_min_algo_steps_to_cache: u32,
+    long_cache_min_cacheable_distance: f32,
+    cache_max_connect_to_cache_steps_multiplier: u32,
+    cache_accept_path_start_distance_ratio: f32,
+    cache_accept_path_end_distance_ratio: f32,
+    negative_cache_accept_path_start_distance_ratio: f32,
+    negative_cache_accept_path_end_distance_ratio: f32,
+    cache_path_start_distance_rating_multiplier: f32,
+    cache_path_end_distance_rating_multiplier: f32,
+    stale_enemy_with_same_destination_collision_penalty: f32,
+    ignore_moving_enemy_collision_distance: f32,
+    enemy_with_different_destination_collision_penalty: f32,
+    general_entity_collision_penalty: f32,
+    general_entity_subsequent_collision_penalty: f32,
+    extended_collision_penalty: f32,
+    max_clients_to_accept_any_new_request: u32,
+    max_clients_to_accept_short_new_request: u32,
+    direct_distance_to_consider_short_request: u32,
+    short_request_max_steps: u32,
+    short_request_ratio: f32,
+    min_steps_to_check_path_find_termination: u32,
+    start_to_goal_cost_multiplier_to_terminate_path_find: f32,
+    overload_levels: Vec<u32>,
+    overload_multipliers: Vec<f32>,
+    negative_path_cache_delay_internal: u32,
+}
+
+impl Serialize for PathFinderSettings {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut s = serializer.serialize_struct("PathFinderSettings", 33)?;
+        s.serialize_field("fwd2bwd_ratio", &self.fwd2bwd_ratio)?;
+        s.serialize_field("goal_pressure_ratio", &self.goal_pressure_ratio)?;
+        s.serialize_field("use_path_cache", &self.use_path_cache)?;
+        s.serialize_field("max_steps_worked_per_tick", &self.max_steps_worked_per_tick)?;
+        s.serialize_field("max_work_done_per_tick", &self.max_work_done_per_tick)?;
+        s.serialize_field("short_cache_size", &self.short_cache_size)?;
+        s.serialize_field("long_cache_size", &self.long_cache_size)?;
+        s.serialize_field(
+            "short_cache_min_cacheable_distance",
+            &self.short_cache_min_cacheable_distance,
+        )?;
+        s.serialize_field(
+            "short_cache_min_algo_steps_to_cache",
+            &self.short_cache_min_algo_steps_to_cache,
+        )?;
+        s.serialize_field(
+            "long_cache_min_cacheable_distance",
+            &self.long_cache_min_cacheable_distance,
+        )?;
+        s.serialize_field(
+            "cache_max_connect_to_cache_steps_multiplier",
+            &self.cache_max_connect_to_cache_steps_multiplier,
+        )?;
+        s.serialize_field(
+            "cache_accept_path_start_distance_ratio",
+            &self.cache_accept_path_start_distance_ratio,
+        )?;
+        s.serialize_field(
+            "cache_accept_path_end_distance_ratio",
+            &self.cache_accept_path_end_distance_ratio,
+        )?;
+        s.serialize_field(
+            "negative_cache_accept_path_start_distance_ratio",
+            &self.negative_cache_accept_path_start_distance_ratio,
+        )?;
+        s.serialize_field(
+            "negative_cache_accept_path_end_distance_ratio",
+            &self.negative_cache_accept_path_end_distance_ratio,
+        )?;
+        s.serialize_field(
+            "cache_path_start_distance_rating_multiplier",
+            &self.cache_path_start_distance_rating_multiplier,
+        )?;
+        s.serialize_field(
+            "cache_path_end_distance_rating_multiplier",
+            &self.cache_path_end_distance_rating_multiplier,
+        )?;
+        s.serialize_field(
+            "stale_enemy_with_same_destination_collision_penalty",
+            &self.stale_enemy_with_same_destination_collision_penalty,
+        )?;
+        s.serialize_field(
+            "ignore_moving_enemy_collision_distance",
+            &self.ignore_moving_enemy_collision_distance,
+        )?;
+        s.serialize_field(
+            "enemy_with_different_destination_collision_penalty",
+            &self.enemy_with_different_destination_collision_penalty,
+        )?;
+        s.serialize_field(
+            "general_entity_collision_penalty",
+            &self.general_entity_collision_penalty,
+        )?;
+        s.serialize_field(
+            "general_entity_subsequent_collision_penalty",
+            &self.general_entity_subsequent_collision_penalty,
+        )?;
+        s.serialize_field(
+            "extended_collision_penalty",
+            &self.extended_collision_penalty,
+        )?;
+        s.serialize_field(
+            "max_clients_to_accept_any_new_request",
+            &self.max_clients_to_accept_any_new_request,
+        )?;
+        s.serialize_field(
+            "max_clients_to_accept_short_new_request",
+            &self.max_clients_to_accept_short_new_request,
+        )?;
+        s.serialize_field(
+            "direct_distance_to_consider_short_request",
+            &self.direct_distance_to_consider_short_request,
+        )?;
+        s.serialize_field("short_request_max_steps", &self.short_request_max_steps)?;
+        s.serialize_field("short_request_ratio", &self.short_request_ratio)?;
+        s.serialize_field(
+            "min_steps_to_check_path_find_termination",
+            &self.min_steps_to_check_path_find_termination,
+        )?;
+        s.serialize_field(
+            "start_to_goal_cost_multiplier_to_terminate_path_find",
+            &self.start_to_goal_cost_multiplier_to_terminate_path_find,
+        )?;
+        s.serialize_field("overload_levels", &self.overload_levels)?;
+        s.serialize_field("overload_multipliers", &self.overload_multipliers)?;
+        s.serialize_field(
+            "negative_path_cache_delay_internal",
+            &self.negative_path_cache_delay_internal,
+        )?;
         s.end()
     }
 }
