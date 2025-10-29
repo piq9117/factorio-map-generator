@@ -23,34 +23,52 @@ impl Serialize for UnitGroupSettings {
         S: Serializer,
     {
         let mut s = serializer.serialize_struct("UnitGroupSettings", 13)?;
-        s.serialize_field("min_group_gathering_time", &self.min_group_gathering_time)?;
-        s.serialize_field("max_group_gathering_time", &self.max_group_gathering_time)?;
+        s.serialize_field(
+            "min_group_gathering_time",
+            &self.min_group_gathering_time.unwrap_or(0),
+        )?;
+        s.serialize_field(
+            "max_group_gathering_time",
+            &self.max_group_gathering_time.unwrap_or(0),
+        )?;
         s.serialize_field(
             "max_wait_time_for_late_members",
-            &self.max_wait_time_for_late_members,
+            &self.max_wait_time_for_late_members.unwrap_or(0),
         )?;
-        s.serialize_field("max_group_radius", &self.max_group_radius)?;
-        s.serialize_field("min_group_radius", &self.min_group_radius)?;
+        s.serialize_field("max_group_radius", &self.max_group_radius.unwrap_or(0.0))?;
+        s.serialize_field("min_group_radius", &self.min_group_radius.unwrap_or(0.0))?;
         s.serialize_field(
             "max_member_speedup_when_behind",
-            &self.max_member_speedup_when_behind,
+            &self.max_member_speedup_when_behind.unwrap_or(0.0),
         )?;
         s.serialize_field(
             "max_member_slowdown_when_ahead",
-            &self.max_member_slowdown_when_ahead,
+            &self.max_member_slowdown_when_ahead.unwrap_or(0.0),
         )?;
-        s.serialize_field("max_group_slowdown_factor", &self.max_group_slowdown_factor)?;
+        s.serialize_field(
+            "max_group_slowdown_factor",
+            &self.max_group_slowdown_factor.unwrap_or(0.0),
+        )?;
         s.serialize_field(
             "max_group_member_fallback_factor",
-            &self.max_group_member_fallback_factor,
+            &self.max_group_member_fallback_factor.unwrap_or(0.0),
         )?;
-        s.serialize_field("member_disown_distance", &self.member_disown_distance)?;
+        s.serialize_field(
+            "member_disown_distance",
+            &self.member_disown_distance.unwrap_or(0.0),
+        )?;
         s.serialize_field(
             "tick_tolerance_when_members_arrives",
-            &self.tick_tolerance_when_members_arrives,
+            &self.tick_tolerance_when_members_arrives.unwrap_or(0),
         )?;
-        s.serialize_field("max_gathering_unit_groups", &self.max_gathering_unit_groups)?;
-        s.serialize_field("max_unit_group_size", &self.max_unit_group_size)?;
+        s.serialize_field(
+            "max_gathering_unit_groups",
+            &self.max_gathering_unit_groups.unwrap_or(0),
+        )?;
+        s.serialize_field(
+            "max_unit_group_size",
+            &self.max_unit_group_size.unwrap_or(0),
+        )?;
         s.end()
     }
 }

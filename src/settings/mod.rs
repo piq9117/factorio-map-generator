@@ -1,6 +1,9 @@
 pub mod asteriods;
+pub mod default;
+pub mod difficulty;
 pub mod enemy_evolution;
 pub mod enemy_expansion;
+pub mod map;
 pub mod path_finder;
 pub mod pollution;
 pub mod state_steering;
