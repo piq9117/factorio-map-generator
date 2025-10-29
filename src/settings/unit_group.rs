@@ -12,7 +12,7 @@ pub struct UnitGroupSettings {
     pub max_group_slowdown_factor: Option<f32>,
     pub max_group_member_fallback_factor: Option<f32>,
     pub member_disown_distance: Option<f32>,
-    pub tick_tolerance_when_members_arrives: Option<u32>,
+    pub tick_tolerance_when_member_arrives: Option<u32>,
     pub max_gathering_unit_groups: Option<u32>,
     pub max_unit_group_size: Option<u32>,
 }
@@ -58,8 +58,8 @@ impl Serialize for UnitGroupSettings {
             &self.member_disown_distance.unwrap_or(0.0),
         )?;
         s.serialize_field(
-            "tick_tolerance_when_members_arrives",
-            &self.tick_tolerance_when_members_arrives.unwrap_or(0),
+            "tick_tolerance_when_member_arrives",
+            &self.tick_tolerance_when_member_arrives.unwrap_or(0),
         )?;
         s.serialize_field(
             "max_gathering_unit_groups",
