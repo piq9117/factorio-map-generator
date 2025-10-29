@@ -5,7 +5,7 @@ pub struct PollutionSettings<'a> {
     pub enabled: bool,
     pub comment_min_to_diffuse_1: Option<&'a str>,
     pub comment_min_to_diffuse_2: Option<&'a str>,
-    pub diffusion_rate: Option<f32>,
+    pub diffusion_ratio: Option<f32>,
     pub min_to_diffuse: Option<f32>,
     pub ageing: Option<f32>,
     pub expected_max_per_chunk: Option<f32>,
@@ -33,7 +33,7 @@ impl<'a> Serialize for PollutionSettings<'a> {
             "_comment_min_to_diffuse_2",
             &self.comment_min_to_diffuse_2.unwrap_or(""),
         )?;
-        s.serialize_field("diffusion_rate", &self.diffusion_rate.unwrap_or(0.0))?;
+        s.serialize_field("diffusion_ratio", &self.diffusion_ratio.unwrap_or(0.0))?;
         s.serialize_field("min_to_diffuse", &self.min_to_diffuse.unwrap_or(0.0))?;
         s.serialize_field("ageing", &self.ageing.unwrap_or(0.0))?;
         s.serialize_field(
