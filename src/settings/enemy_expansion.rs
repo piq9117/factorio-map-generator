@@ -3,17 +3,17 @@ use serde::{Serialize, Serializer};
 
 pub struct EnemyExpansionSettings {
     pub enabled: bool,
-    pub max_expansion_distance: u32,
-    pub friendly_base_influence_radius: u32,
-    pub enemy_building_influence_radius: u32,
-    pub building_coefficient: f32,
-    pub other_base_coefficient: f32,
-    pub neighbouring_base_chunk_coefficient: f32,
-    pub max_colliding_tiles_coefficient: f32,
-    pub settler_group_min_size: u32,
-    pub settler_group_max_size: u32,
-    pub min_expansion_cooldown: u32,
-    pub max_expansion_cooldown: u32,
+    pub max_expansion_distance: Option<u32>,
+    pub friendly_base_influence_radius: Option<u32>,
+    pub enemy_building_influence_radius: Option<u32>,
+    pub building_coefficient: Option<f32>,
+    pub other_base_coefficient: Option<f32>,
+    pub neighbouring_base_chunk_coefficient: Option<f32>,
+    pub max_colliding_tiles_coefficient: Option<f32>,
+    pub settler_group_min_size: Option<u32>,
+    pub settler_group_max_size: Option<u32>,
+    pub min_expansion_cooldown: Option<u32>,
+    pub max_expansion_cooldown: Option<u32>,
 }
 
 impl Serialize for EnemyExpansionSettings {
