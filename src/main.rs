@@ -113,8 +113,8 @@ fn main() -> std::io::Result<()> {
         max_failed_behavior_count: 0,
         asteriods: AsteriodSettings {
             spawning_rate: 0.0,
-            max_ray_portals_expanded_per_tick: 0
-        }
+            max_ray_portals_expanded_per_tick: 0,
+        },
     };
 
     serde_json::to_writer(file, &map_settings)?;
@@ -130,7 +130,7 @@ struct MapSettings<'a> {
     unit_group: UnitGroupSettings,
     path_finder: PathFinderSettings,
     max_failed_behavior_count: u32,
-    asteriods: AsteriodSettings
+    asteriods: AsteriodSettings,
 }
 
 impl<'a> Serialize for MapSettings<'a> {
@@ -546,11 +546,14 @@ struct AsteriodSettings {
 impl Serialize for AsteriodSettings {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
-      S: Serializer
+        S: Serializer,
     {
         let mut s = serializer.serialize_struct("AsteriodSettings", 2)?;
         s.serialize_field("spawning_rate", &self.spawning_rate)?;
-        s.serialize_field("max_ray_portals_expanded_per_tick", &self.max_ray_portals_expanded_per_tick)?;
+        s.serialize_field(
+            "max_ray_portals_expanded_per_tick",
+            &self.max_ray_portals_expanded_per_tick,
+        )?;
         s.end()
     }
 }
