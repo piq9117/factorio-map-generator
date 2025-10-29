@@ -13,7 +13,7 @@ pub fn mk_default_settings() -> MapSettings<'static> {
             spoil_time_modifier: None,
         },
         pollution: PollutionSettings {
-            enable: true,
+            enabled: true,
             comment_min_to_diffuse_1: None,
             comment_min_to_diffuse_2: None,
             diffusion_rate: None,
