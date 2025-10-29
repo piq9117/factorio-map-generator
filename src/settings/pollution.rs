@@ -2,7 +2,7 @@ use serde::ser::SerializeStruct;
 use serde::{Serialize, Serializer};
 
 pub struct PollutionSettings<'a> {
-    pub enable: bool,
+    pub enabled: bool,
     pub comment_min_to_diffuse_1: Option<&'a str>,
     pub comment_min_to_diffuse_2: Option<&'a str>,
     pub diffusion_rate: Option<f32>,
@@ -24,7 +24,7 @@ impl<'a> Serialize for PollutionSettings<'a> {
         S: Serializer,
     {
         let mut s = serializer.serialize_struct("Polluion", 2)?;
-        s.serialize_field("enable", &self.enable)?;
+        s.serialize_field("enabled", &self.enabled)?;
         s.serialize_field(
             "_comment_min_to_diffuse_1",
             &self.comment_min_to_diffuse_1.unwrap_or(""),
