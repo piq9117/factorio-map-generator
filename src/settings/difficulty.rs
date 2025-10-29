@@ -14,7 +14,7 @@ impl Serialize for DifficultySettings {
         let mut s = serializer.serialize_struct("DifficultySettings", 2)?;
         s.serialize_field(
             "technology_price_multiplier",
-            &self.technology_price_multiplier.unwrap_or(0.0),
+            &self.technology_price_multiplier.unwrap_or(0.001),
         )?;
         s.serialize_field(
             "spoil_time_modifier",

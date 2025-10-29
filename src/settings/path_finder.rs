@@ -34,7 +34,7 @@ pub struct PathFinderSettings {
     pub start_to_goal_cost_multiplier_to_terminate_path_find: Option<f32>,
     pub overload_levels: Vec<u32>,
     pub overload_multipliers: Vec<f32>,
-    pub negative_path_cache_delay_internal: Option<u32>,
+    pub negative_path_cache_delay_interval: Option<u32>,
 }
 
 impl Serialize for PathFinderSettings {
@@ -43,7 +43,7 @@ impl Serialize for PathFinderSettings {
         S: Serializer,
     {
         let mut s = serializer.serialize_struct("PathFinderSettings", 33)?;
-        s.serialize_field("fwd2bwd_ratio", &self.fwd2bwd_ratio.unwrap_or(0))?;
+        s.serialize_field("fwd2bwd_ratio", &self.fwd2bwd_ratio.unwrap_or(2))?;
         s.serialize_field(
             "goal_pressure_ratio",
             &self.goal_pressure_ratio.unwrap_or(0.0),
@@ -172,8 +172,8 @@ impl Serialize for PathFinderSettings {
         s.serialize_field("overload_levels", &self.overload_levels)?;
         s.serialize_field("overload_multipliers", &self.overload_multipliers)?;
         s.serialize_field(
-            "negative_path_cache_delay_internal",
-            &self.negative_path_cache_delay_internal.unwrap_or(0),
+            "negative_path_cache_delay_interval",
+            &self.negative_path_cache_delay_interval.unwrap_or(0),
         )?;
         s.end()
     }

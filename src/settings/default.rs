@@ -1,5 +1,5 @@
 use crate::settings::{
-    asteriods::AsteriodSettings, difficulty::DifficultySettings,
+    asteroids::AsteroidSettings, difficulty::DifficultySettings,
     enemy_evolution::EnemyEvolutionSettings, enemy_expansion::EnemyExpansionSettings,
     map::MapSettings, path_finder::PathFinderSettings, pollution::PollutionSettings,
     state_steering::StateSteeringSettings, steering::SteeringSettings,
@@ -111,10 +111,10 @@ pub fn mk_default_settings() -> MapSettings<'static> {
             start_to_goal_cost_multiplier_to_terminate_path_find: None,
             overload_levels: vec![0],
             overload_multipliers: vec![0.0],
-            negative_path_cache_delay_internal: None,
+            negative_path_cache_delay_interval: None,
         },
         max_failed_behavior_count: None,
-        asteriods: AsteriodSettings {
+        asteroids: AsteroidSettings {
             spawning_rate: None,
             max_ray_portals_expanded_per_tick: None,
         },
