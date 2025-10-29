@@ -8,6 +8,7 @@ pub struct EnemyExpansionSettings {
     pub enemy_building_influence_radius: Option<u32>,
     pub building_coefficient: Option<f32>,
     pub other_base_coefficient: Option<f32>,
+    pub neighbouring_chunk_coefficient: Option<f32>,
     pub neighbouring_base_chunk_coefficient: Option<f32>,
     pub max_colliding_tiles_coefficient: Option<f32>,
     pub settler_group_min_size: Option<u32>,
@@ -42,6 +43,10 @@ impl Serialize for EnemyExpansionSettings {
         s.serialize_field(
             "other_base_coefficient",
             &self.other_base_coefficient.unwrap_or(0.0),
+        )?;
+        s.serialize_field(
+            "neighbouring_chunk_coefficient",
+            &self.neighbouring_chunk_coefficient.unwrap_or(0.0),
         )?;
         s.serialize_field(
             "neighbouring_base_chunk_coefficient",
