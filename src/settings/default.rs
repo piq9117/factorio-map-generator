@@ -16,7 +16,7 @@ pub fn mk_default_settings() -> MapSettings<'static> {
             enabled: true,
             comment_min_to_diffuse_1: None,
             comment_min_to_diffuse_2: None,
-            diffusion_rate: None,
+            diffusion_ratio: None,
             min_to_diffuse: None,
             ageing: None,
             expected_max_per_chunk: None,
