@@ -23,29 +23,50 @@ impl Serialize for EnemyExpansionSettings {
     {
         let mut s = serializer.serialize_struct("EnemyExpansionSettings", 12)?;
         s.serialize_field("enabled", &self.enabled)?;
-        s.serialize_field("max_expansion_distance", &self.max_expansion_distance)?;
+        s.serialize_field(
+            "max_expansion_distance",
+            &self.max_expansion_distance.unwrap_or(0),
+        )?;
         s.serialize_field(
             "friendly_base_influence_radius",
-            &self.friendly_base_influence_radius,
+            &self.friendly_base_influence_radius.unwrap_or(0),
         )?;
         s.serialize_field(
             "enemy_building_influence_radius",
-            &self.enemy_building_influence_radius,
+            &self.enemy_building_influence_radius.unwrap_or(0),
         )?;
-        s.serialize_field("building_coefficient", &self.building_coefficient)?;
-        s.serialize_field("other_base_coefficient", &self.other_base_coefficient)?;
+        s.serialize_field(
+            "building_coefficient",
+            &self.building_coefficient.unwrap_or(0.0),
+        )?;
+        s.serialize_field(
+            "other_base_coefficient",
+            &self.other_base_coefficient.unwrap_or(0.0),
+        )?;
         s.serialize_field(
             "neighbouring_base_chunk_coefficient",
-            &self.neighbouring_base_chunk_coefficient,
+            &self.neighbouring_base_chunk_coefficient.unwrap_or(0.0),
         )?;
         s.serialize_field(
             "max_colliding_tiles_coefficient",
-            &self.max_colliding_tiles_coefficient,
+            &self.max_colliding_tiles_coefficient.unwrap_or(0.0),
         )?;
-        s.serialize_field("settler_group_min_size", &self.settler_group_min_size)?;
-        s.serialize_field("settler_group_max_size", &self.settler_group_max_size)?;
-        s.serialize_field("min_expansion_cooldown", &self.min_expansion_cooldown)?;
-        s.serialize_field("max_expansion_cooldown", &self.max_expansion_cooldown)?;
+        s.serialize_field(
+            "settler_group_min_size",
+            &self.settler_group_min_size.unwrap_or(0),
+        )?;
+        s.serialize_field(
+            "settler_group_max_size",
+            &self.settler_group_max_size.unwrap_or(0),
+        )?;
+        s.serialize_field(
+            "min_expansion_cooldown",
+            &self.min_expansion_cooldown.unwrap_or(0),
+        )?;
+        s.serialize_field(
+            "max_expansion_cooldown",
+            &self.max_expansion_cooldown.unwrap_or(0),
+        )?;
         s.end()
     }
 }
