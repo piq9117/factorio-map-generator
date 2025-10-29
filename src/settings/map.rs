@@ -2,7 +2,7 @@ use serde::ser::SerializeStruct;
 use serde::{Serialize, Serializer};
 
 use crate::settings::{
-    asteriods::AsteriodSettings, difficulty::DifficultySettings,
+    asteroids::AsteroidSettings, difficulty::DifficultySettings,
     enemy_evolution::EnemyEvolutionSettings, enemy_expansion::EnemyExpansionSettings,
     path_finder::PathFinderSettings, pollution::PollutionSettings, steering::SteeringSettings,
     unit_group::UnitGroupSettings,
@@ -17,7 +17,7 @@ pub struct MapSettings<'a> {
     pub unit_group: UnitGroupSettings,
     pub path_finder: PathFinderSettings,
     pub max_failed_behavior_count: Option<u32>,
-    pub asteriods: AsteriodSettings,
+    pub asteroids: AsteroidSettings,
 }
 
 impl<'a> Serialize for MapSettings<'a> {
@@ -37,7 +37,7 @@ impl<'a> Serialize for MapSettings<'a> {
             "max_failed_behavior_count",
             &self.max_failed_behavior_count.unwrap_or(0),
         )?;
-        s.serialize_field("asteriods", &self.asteriods)?;
+        s.serialize_field("asteroids", &self.asteroids)?;
         s.end()
     }
 }
