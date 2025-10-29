@@ -55,6 +55,7 @@ pub fn mk_default_settings() -> MapSettings<'static> {
             enemy_building_influence_radius: None,
             building_coefficient: None,
             other_base_coefficient: None,
+            neighbouring_chunk_coefficient: None,
             neighbouring_base_chunk_coefficient: None,
             max_colliding_tiles_coefficient: None,
             settler_group_min_size: None,
