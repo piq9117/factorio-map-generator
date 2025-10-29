@@ -74,7 +74,7 @@ pub fn mk_default_settings() -> MapSettings<'static> {
             max_group_slowdown_factor: None,
             max_group_member_fallback_factor: None,
             member_disown_distance: None,
-            tick_tolerance_when_members_arrives: None,
+            tick_tolerance_when_member_arrives: None,
             max_gathering_unit_groups: None,
             max_unit_group_size: None,
         },
