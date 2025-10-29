@@ -2,19 +2,19 @@ use serde::ser::SerializeStruct;
 use serde::{Serialize, Serializer};
 
 pub struct UnitGroupSettings {
-    pub min_group_gathering_time: u32,
-    pub max_group_gathering_time: u32,
-    pub max_wait_time_for_late_members: u32,
-    pub max_group_radius: f32,
-    pub min_group_radius: f32,
-    pub max_member_speedup_when_behind: f32,
-    pub max_member_slowdown_when_ahead: f32,
-    pub max_group_slowdown_factor: f32,
-    pub max_group_member_fallback_factor: f32,
-    pub member_disown_distance: f32,
-    pub tick_tolerance_when_members_arrives: u32,
-    pub max_gathering_unit_groups: u32,
-    pub max_unit_group_size: u32,
+    pub min_group_gathering_time: Option<u32>,
+    pub max_group_gathering_time: Option<u32>,
+    pub max_wait_time_for_late_members: Option<u32>,
+    pub max_group_radius: Option<f32>,
+    pub min_group_radius: Option<f32>,
+    pub max_member_speedup_when_behind: Option<f32>,
+    pub max_member_slowdown_when_ahead: Option<f32>,
+    pub max_group_slowdown_factor: Option<f32>,
+    pub max_group_member_fallback_factor: Option<f32>,
+    pub member_disown_distance: Option<f32>,
+    pub tick_tolerance_when_members_arrives: Option<u32>,
+    pub max_gathering_unit_groups: Option<u32>,
+    pub max_unit_group_size: Option<u32>,
 }
 
 impl Serialize for UnitGroupSettings {

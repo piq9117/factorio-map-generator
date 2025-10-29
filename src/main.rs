@@ -14,113 +14,113 @@ fn main() -> std::io::Result<()> {
     let file = File::create("map-settings.json")?;
     let map_settings = MapSettings {
         difficulty_settings: DifficultySettings {
-            technology_price_multiplier: 1,
-            spoil_time_modifier: 1,
+            technology_price_multiplier: None,
+            spoil_time_modifier: None,
         },
         pollution: PollutionSettings {
             enable: true,
-            comment_min_to_diffuse_1: "hello",
-            comment_min_to_diffuse_2: "hello",
-            diffusion_rate: 0.0,
-            min_to_diffuse: 0.1,
-            ageing: 0.0,
-            expected_max_per_chunk: 0.0,
-            min_to_show_per_chunk: 0.0,
-            min_pollution_to_damage_trees: 0.0,
-            pollution_with_max_forest_damage: 0.0,
-            pollution_restored_per_tree_damage: 0.0,
-            pollution_per_tree_damage: 0.0,
-            max_pollution_to_restore_trees: 0.0,
-            enemy_attack_pollution_consumption_modifier: 0.0,
+            comment_min_to_diffuse_1: None,
+            comment_min_to_diffuse_2: None,
+            diffusion_rate: None,
+            min_to_diffuse: None,
+            ageing: None,
+            expected_max_per_chunk: None,
+            min_to_show_per_chunk: None,
+            min_pollution_to_damage_trees: None,
+            pollution_with_max_forest_damage: None,
+            pollution_restored_per_tree_damage: None,
+            pollution_per_tree_damage: None,
+            max_pollution_to_restore_trees: None,
+            enemy_attack_pollution_consumption_modifier: None,
         },
         steering: SteeringSettings {
             default: StateSteeringSettings {
-                radius: 0.0,
-                separation_factor: 0.0,
-                separation_force: 0.0,
+                radius: None,
+                separation_factor: None,
+                separation_force: None,
                 force_unit_fuzzy_goto_behavior: false,
             },
             moving: StateSteeringSettings {
-                radius: 0.0,
-                separation_factor: 0.0,
-                separation_force: 0.0,
+                radius: None,
+                separation_factor: None,
+                separation_force: None,
                 force_unit_fuzzy_goto_behavior: false,
             },
         },
         enemy_evolution: EnemyEvolutionSettings {
             enabled: false,
-            time_factor: 0.0,
-            destroy_factor: 0.0,
-            pollution_factor: 0.0,
+            time_factor: None,
+            destroy_factor: None,
+            pollution_factor: None,
         },
         enemy_expansion: EnemyExpansionSettings {
             enabled: false,
-            max_expansion_distance: 0,
-            friendly_base_influence_radius: 0,
-            enemy_building_influence_radius: 0,
-            building_coefficient: 0.0,
-            other_base_coefficient: 0.0,
-            neighbouring_base_chunk_coefficient: 0.0,
-            max_colliding_tiles_coefficient: 0.0,
-            settler_group_min_size: 0,
-            settler_group_max_size: 0,
-            min_expansion_cooldown: 0,
-            max_expansion_cooldown: 0,
+            max_expansion_distance: None,
+            friendly_base_influence_radius: None,
+            enemy_building_influence_radius: None,
+            building_coefficient: None,
+            other_base_coefficient: None,
+            neighbouring_base_chunk_coefficient: None,
+            max_colliding_tiles_coefficient: None,
+            settler_group_min_size: None,
+            settler_group_max_size: None,
+            min_expansion_cooldown: None,
+            max_expansion_cooldown: None,
         },
         unit_group: UnitGroupSettings {
-            min_group_gathering_time: 0,
-            max_group_gathering_time: 0,
-            max_wait_time_for_late_members: 0,
-            max_group_radius: 0.0,
-            min_group_radius: 0.0,
-            max_member_speedup_when_behind: 0.0,
-            max_member_slowdown_when_ahead: 0.0,
-            max_group_slowdown_factor: 0.0,
-            max_group_member_fallback_factor: 0.0,
-            member_disown_distance: 0.0,
-            tick_tolerance_when_members_arrives: 0,
-            max_gathering_unit_groups: 0,
-            max_unit_group_size: 0,
+            min_group_gathering_time: None,
+            max_group_gathering_time: None,
+            max_wait_time_for_late_members: None,
+            max_group_radius: None,
+            min_group_radius: None,
+            max_member_speedup_when_behind: None,
+            max_member_slowdown_when_ahead: None,
+            max_group_slowdown_factor: None,
+            max_group_member_fallback_factor: None,
+            member_disown_distance: None,
+            tick_tolerance_when_members_arrives: None,
+            max_gathering_unit_groups: None,
+            max_unit_group_size: None,
         },
         path_finder: PathFinderSettings {
-            fwd2bwd_ratio: 0,
-            goal_pressure_ratio: 0.0,
+            fwd2bwd_ratio: None,
+            goal_pressure_ratio: None,
             use_path_cache: false,
-            max_steps_worked_per_tick: 0.0,
-            max_work_done_per_tick: 0,
-            short_cache_size: 0,
-            long_cache_size: 0,
-            short_cache_min_cacheable_distance: 0.0,
-            short_cache_min_algo_steps_to_cache: 0,
-            long_cache_min_cacheable_distance: 0.0,
-            cache_max_connect_to_cache_steps_multiplier: 0,
-            cache_accept_path_start_distance_ratio: 0.0,
-            cache_accept_path_end_distance_ratio: 0.0,
-            negative_cache_accept_path_start_distance_ratio: 0.0,
-            negative_cache_accept_path_end_distance_ratio: 0.0,
-            cache_path_start_distance_rating_multiplier: 0.0,
-            cache_path_end_distance_rating_multiplier: 0.0,
-            stale_enemy_with_same_destination_collision_penalty: 0.0,
-            ignore_moving_enemy_collision_distance: 0.0,
-            enemy_with_different_destination_collision_penalty: 0.0,
-            general_entity_collision_penalty: 0.0,
-            general_entity_subsequent_collision_penalty: 0.0,
-            extended_collision_penalty: 0.0,
-            max_clients_to_accept_any_new_request: 0,
-            max_clients_to_accept_short_new_request: 0,
-            direct_distance_to_consider_short_request: 0,
-            short_request_max_steps: 0,
-            short_request_ratio: 0.0,
-            min_steps_to_check_path_find_termination: 0,
-            start_to_goal_cost_multiplier_to_terminate_path_find: 0.0,
+            max_steps_worked_per_tick: None,
+            max_work_done_per_tick: None,
+            short_cache_size: None,
+            long_cache_size: None,
+            short_cache_min_cacheable_distance: None,
+            short_cache_min_algo_steps_to_cache: None,
+            long_cache_min_cacheable_distance: None,
+            cache_max_connect_to_cache_steps_multiplier: None,
+            cache_accept_path_start_distance_ratio: None,
+            cache_accept_path_end_distance_ratio: None,
+            negative_cache_accept_path_start_distance_ratio: None,
+            negative_cache_accept_path_end_distance_ratio: None,
+            cache_path_start_distance_rating_multiplier: None,
+            cache_path_end_distance_rating_multiplier: None,
+            stale_enemy_with_same_destination_collision_penalty: None,
+            ignore_moving_enemy_collision_distance: None,
+            enemy_with_different_destination_collision_penalty: None,
+            general_entity_collision_penalty: None,
+            general_entity_subsequent_collision_penalty: None,
+            extended_collision_penalty: None,
+            max_clients_to_accept_any_new_request: None,
+            max_clients_to_accept_short_new_request: None,
+            direct_distance_to_consider_short_request: None,
+            short_request_max_steps: None,
+            short_request_ratio: None,
+            min_steps_to_check_path_find_termination: None,
+            start_to_goal_cost_multiplier_to_terminate_path_find: None,
             overload_levels: vec![0],
             overload_multipliers: vec![0.0],
-            negative_path_cache_delay_internal: 0,
+            negative_path_cache_delay_internal: None,
         },
-        max_failed_behavior_count: 0,
+        max_failed_behavior_count: None,
         asteriods: AsteriodSettings {
-            spawning_rate: 0.0,
-            max_ray_portals_expanded_per_tick: 0,
+            spawning_rate: None,
+            max_ray_portals_expanded_per_tick: None,
         },
     };
 
@@ -136,7 +136,7 @@ struct MapSettings<'a> {
     enemy_expansion: EnemyExpansionSettings,
     unit_group: UnitGroupSettings,
     path_finder: PathFinderSettings,
-    max_failed_behavior_count: u32,
+    max_failed_behavior_count: Option<u32>,
     asteriods: AsteriodSettings,
 }
 
@@ -153,15 +153,15 @@ impl<'a> Serialize for MapSettings<'a> {
         s.serialize_field("enemy_expension", &self.enemy_expansion)?;
         s.serialize_field("unit_group", &self.unit_group)?;
         s.serialize_field("path_finder", &self.path_finder)?;
-        s.serialize_field("max_failed_behavior_count", &self.max_failed_behavior_count)?;
+        s.serialize_field("max_failed_behavior_count", &self.max_failed_behavior_count.unwrap_or(0))?;
         s.serialize_field("asteriods", &self.asteriods)?;
         s.end()
     }
 }
 
 struct DifficultySettings {
-    technology_price_multiplier: u8,
-    spoil_time_modifier: u8,
+    technology_price_multiplier: Option<f32>,
+    spoil_time_modifier: Option<f32>,
 }
 
 impl Serialize for DifficultySettings {
@@ -172,28 +172,31 @@ impl Serialize for DifficultySettings {
         let mut s = serializer.serialize_struct("DifficultySettings", 2)?;
         s.serialize_field(
             "technology_price_multiplier",
-            &self.technology_price_multiplier,
+            &self.technology_price_multiplier.unwrap_or(0.0),
         )?;
-        s.serialize_field("spoil_time_modifier", &self.spoil_time_modifier)?;
+        s.serialize_field(
+            "spoil_time_modifier",
+            &self.spoil_time_modifier.unwrap_or(0.0),
+        )?;
         s.end()
     }
 }
 
 struct PollutionSettings<'a> {
     enable: bool,
-    comment_min_to_diffuse_1: &'a str,
-    comment_min_to_diffuse_2: &'a str,
-    diffusion_rate: f32,
-    min_to_diffuse: f32,
-    ageing: f32,
-    expected_max_per_chunk: f32,
-    min_to_show_per_chunk: f32,
-    min_pollution_to_damage_trees: f32,
-    pollution_with_max_forest_damage: f32,
-    pollution_restored_per_tree_damage: f32,
-    pollution_per_tree_damage: f32,
-    max_pollution_to_restore_trees: f32,
-    enemy_attack_pollution_consumption_modifier: f32,
+    comment_min_to_diffuse_1: Option<&'a str>,
+    comment_min_to_diffuse_2: Option<&'a str>,
+    diffusion_rate: Option<f32>,
+    min_to_diffuse: Option<f32>,
+    ageing: Option<f32>,
+    expected_max_per_chunk: Option<f32>,
+    min_to_show_per_chunk: Option<f32>,
+    min_pollution_to_damage_trees: Option<f32>,
+    pollution_with_max_forest_damage: Option<f32>,
+    pollution_restored_per_tree_damage: Option<f32>,
+    pollution_per_tree_damage: Option<f32>,
+    max_pollution_to_restore_trees: Option<f32>,
+    enemy_attack_pollution_consumption_modifier: Option<f32>,
 }
 
 impl<'a> Serialize for PollutionSettings<'a> {
@@ -203,33 +206,50 @@ impl<'a> Serialize for PollutionSettings<'a> {
     {
         let mut s = serializer.serialize_struct("Polluion", 2)?;
         s.serialize_field("enable", &self.enable)?;
-        s.serialize_field("_comment_min_to_diffuse_1", &self.comment_min_to_diffuse_1)?;
-        s.serialize_field("_comment_min_to_diffuse_2", &self.comment_min_to_diffuse_2)?;
-        s.serialize_field("diffusion_rate", &self.diffusion_rate)?;
-        s.serialize_field("min_to_diffuse", &self.min_to_diffuse)?;
-        s.serialize_field("ageing", &self.ageing)?;
-        s.serialize_field("expected_max_per_chunk", &self.expected_max_per_chunk)?;
-        s.serialize_field("min_to_show_per_chunk", &self.min_to_show_per_chunk)?;
+        s.serialize_field(
+            "_comment_min_to_diffuse_1",
+            &self.comment_min_to_diffuse_1.unwrap_or(""),
+        )?;
+        s.serialize_field(
+            "_comment_min_to_diffuse_2",
+            &self.comment_min_to_diffuse_2.unwrap_or(""),
+        )?;
+        s.serialize_field("diffusion_rate", &self.diffusion_rate.unwrap_or(0.0))?;
+        s.serialize_field("min_to_diffuse", &self.min_to_diffuse.unwrap_or(0.0))?;
+        s.serialize_field("ageing", &self.ageing.unwrap_or(0.0))?;
+        s.serialize_field(
+            "expected_max_per_chunk",
+            &self.expected_max_per_chunk.unwrap_or(0.0),
+        )?;
+        s.serialize_field(
+            "min_to_show_per_chunk",
+            &self.min_to_show_per_chunk.unwrap_or(0.0),
+        )?;
         s.serialize_field(
             "min_pollution_to_damage_trees",
-            &self.min_pollution_to_damage_trees,
+            &self.min_pollution_to_damage_trees.unwrap_or(0.0),
         )?;
         s.serialize_field(
             "pollution_with_max_forest_damage",
-            &self.pollution_with_max_forest_damage,
+            &self.pollution_with_max_forest_damage.unwrap_or(0.0),
         )?;
         s.serialize_field(
             "pollution_restored_per_tree_damage",
-            &self.pollution_restored_per_tree_damage,
+            &self.pollution_restored_per_tree_damage.unwrap_or(0.0),
         )?;
-        s.serialize_field("pollution_per_tree_damage", &self.pollution_per_tree_damage)?;
+        s.serialize_field(
+            "pollution_per_tree_damage",
+            &self.pollution_per_tree_damage.unwrap_or(0.0),
+        )?;
         s.serialize_field(
             "max_pollution_to_restore_trees",
-            &self.max_pollution_to_restore_trees,
+            &self.max_pollution_to_restore_trees.unwrap_or(0.0),
         )?;
         s.serialize_field(
             "enemy_attack_pollution_consumption_modifier",
-            &self.enemy_attack_pollution_consumption_modifier,
+            &self
+                .enemy_attack_pollution_consumption_modifier
+                .unwrap_or(0.0),
         )?;
         s.end()
     }
@@ -253,9 +273,9 @@ impl Serialize for SteeringSettings {
 }
 
 struct StateSteeringSettings {
-    radius: f32,
-    separation_factor: f32,
-    separation_force: f32,
+    radius: Option<f32>,
+    separation_factor: Option<f32>,
+    separation_force: Option<f32>,
     force_unit_fuzzy_goto_behavior: bool,
 }
 
@@ -265,9 +285,9 @@ impl Serialize for StateSteeringSettings {
         S: Serializer,
     {
         let mut s = serializer.serialize_struct("StateSteerSettigs", 4)?;
-        s.serialize_field("radius", &self.radius)?;
-        s.serialize_field("separation_factor", &self.separation_factor)?;
-        s.serialize_field("separation_force", &self.separation_force)?;
+        s.serialize_field("radius", &self.radius.unwrap_or(0.0))?;
+        s.serialize_field("separation_factor", &self.separation_factor.unwrap_or(0.0))?;
+        s.serialize_field("separation_force", &self.separation_force.unwrap_or(0.0))?;
         s.serialize_field(
             "force_unit_fuzzy_goto_behavior",
             &self.force_unit_fuzzy_goto_behavior,

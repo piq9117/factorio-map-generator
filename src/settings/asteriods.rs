@@ -2,8 +2,8 @@ use serde::ser::SerializeStruct;
 use serde::{Serialize, Serializer};
 
 pub struct AsteriodSettings {
-    pub spawning_rate: f32,
-    pub max_ray_portals_expanded_per_tick: u32,
+    pub spawning_rate: Option<f32>,
+    pub max_ray_portals_expanded_per_tick: Option<u32>,
 }
 
 impl Serialize for AsteriodSettings {
@@ -12,10 +12,10 @@ impl Serialize for AsteriodSettings {
         S: Serializer,
     {
         let mut s = serializer.serialize_struct("AsteriodSettings", 2)?;
-        s.serialize_field("spawning_rate", &self.spawning_rate)?;
+        s.serialize_field("spawning_rate", &self.spawning_rate.unwrap_or(0.0))?;
         s.serialize_field(
             "max_ray_portals_expanded_per_tick",
-            &self.max_ray_portals_expanded_per_tick,
+            &self.max_ray_portals_expanded_per_tick.unwrap_or(0),
         )?;
         s.end()
     }
