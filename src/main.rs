@@ -7,7 +7,8 @@ mod settings;
 use settings::{
     asteriods::AsteriodSettings, enemy_evolution::EnemyEvolutionSettings,
     enemy_expansion::EnemyExpansionSettings, path_finder::PathFinderSettings,
-    unit_group::UnitGroupSettings,
+    pollution::PollutionSettings, state_steering::StateSteeringSettings,
+    steering::SteeringSettings, unit_group::UnitGroupSettings,
 };
 
 fn main() -> std::io::Result<()> {
@@ -153,7 +154,10 @@ impl<'a> Serialize for MapSettings<'a> {
         s.serialize_field("enemy_expension", &self.enemy_expansion)?;
         s.serialize_field("unit_group", &self.unit_group)?;
         s.serialize_field("path_finder", &self.path_finder)?;
-        s.serialize_field("max_failed_behavior_count", &self.max_failed_behavior_count.unwrap_or(0))?;
+        s.serialize_field(
+            "max_failed_behavior_count",
+            &self.max_failed_behavior_count.unwrap_or(0),
+        )?;
         s.serialize_field("asteriods", &self.asteriods)?;
         s.end()
     }
@@ -177,120 +181,6 @@ impl Serialize for DifficultySettings {
         s.serialize_field(
             "spoil_time_modifier",
             &self.spoil_time_modifier.unwrap_or(0.0),
-        )?;
-        s.end()
-    }
-}
-
-struct PollutionSettings<'a> {
-    enable: bool,
-    comment_min_to_diffuse_1: Option<&'a str>,
-    comment_min_to_diffuse_2: Option<&'a str>,
-    diffusion_rate: Option<f32>,
-    min_to_diffuse: Option<f32>,
-    ageing: Option<f32>,
-    expected_max_per_chunk: Option<f32>,
-    min_to_show_per_chunk: Option<f32>,
-    min_pollution_to_damage_trees: Option<f32>,
-    pollution_with_max_forest_damage: Option<f32>,
-    pollution_restored_per_tree_damage: Option<f32>,
-    pollution_per_tree_damage: Option<f32>,
-    max_pollution_to_restore_trees: Option<f32>,
-    enemy_attack_pollution_consumption_modifier: Option<f32>,
-}
-
-impl<'a> Serialize for PollutionSettings<'a> {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: Serializer,
-    {
-        let mut s = serializer.serialize_struct("Polluion", 2)?;
-        s.serialize_field("enable", &self.enable)?;
-        s.serialize_field(
-            "_comment_min_to_diffuse_1",
-            &self.comment_min_to_diffuse_1.unwrap_or(""),
-        )?;
-        s.serialize_field(
-            "_comment_min_to_diffuse_2",
-            &self.comment_min_to_diffuse_2.unwrap_or(""),
-        )?;
-        s.serialize_field("diffusion_rate", &self.diffusion_rate.unwrap_or(0.0))?;
-        s.serialize_field("min_to_diffuse", &self.min_to_diffuse.unwrap_or(0.0))?;
-        s.serialize_field("ageing", &self.ageing.unwrap_or(0.0))?;
-        s.serialize_field(
-            "expected_max_per_chunk",
-            &self.expected_max_per_chunk.unwrap_or(0.0),
-        )?;
-        s.serialize_field(
-            "min_to_show_per_chunk",
-            &self.min_to_show_per_chunk.unwrap_or(0.0),
-        )?;
-        s.serialize_field(
-            "min_pollution_to_damage_trees",
-            &self.min_pollution_to_damage_trees.unwrap_or(0.0),
-        )?;
-        s.serialize_field(
-            "pollution_with_max_forest_damage",
-            &self.pollution_with_max_forest_damage.unwrap_or(0.0),
-        )?;
-        s.serialize_field(
-            "pollution_restored_per_tree_damage",
-            &self.pollution_restored_per_tree_damage.unwrap_or(0.0),
-        )?;
-        s.serialize_field(
-            "pollution_per_tree_damage",
-            &self.pollution_per_tree_damage.unwrap_or(0.0),
-        )?;
-        s.serialize_field(
-            "max_pollution_to_restore_trees",
-            &self.max_pollution_to_restore_trees.unwrap_or(0.0),
-        )?;
-        s.serialize_field(
-            "enemy_attack_pollution_consumption_modifier",
-            &self
-                .enemy_attack_pollution_consumption_modifier
-                .unwrap_or(0.0),
-        )?;
-        s.end()
-    }
-}
-
-struct SteeringSettings {
-    default: StateSteeringSettings,
-    moving: StateSteeringSettings,
-}
-
-impl Serialize for SteeringSettings {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: Serializer,
-    {
-        let mut s = serializer.serialize_struct("SteeringSettings", 2)?;
-        s.serialize_field("default", &self.default)?;
-        s.serialize_field("moving", &self.moving)?;
-        s.end()
-    }
-}
-
-struct StateSteeringSettings {
-    radius: Option<f32>,
-    separation_factor: Option<f32>,
-    separation_force: Option<f32>,
-    force_unit_fuzzy_goto_behavior: bool,
-}
-
-impl Serialize for StateSteeringSettings {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: Serializer,
-    {
-        let mut s = serializer.serialize_struct("StateSteerSettigs", 4)?;
-        s.serialize_field("radius", &self.radius.unwrap_or(0.0))?;
-        s.serialize_field("separation_factor", &self.separation_factor.unwrap_or(0.0))?;
-        s.serialize_field("separation_force", &self.separation_force.unwrap_or(0.0))?;
-        s.serialize_field(
-            "force_unit_fuzzy_goto_behavior",
-            &self.force_unit_fuzzy_goto_behavior,
         )?;
         s.end()
     }

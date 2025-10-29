@@ -2,4 +2,7 @@ pub mod asteriods;
 pub mod enemy_evolution;
 pub mod enemy_expansion;
 pub mod path_finder;
+pub mod pollution;
+pub mod state_steering;
+pub mod steering;
 pub mod unit_group;
