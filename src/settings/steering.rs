@@ -1,11 +1,15 @@
+use serde::de::{IgnoredAny, MapAccess, Visitor};
 use serde::ser::SerializeStruct;
-use serde::{Serialize, Serializer};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
+
+use std::fmt;
 
 use crate::settings::state_steering::StateSteeringSettings;
 
+#[derive(Debug)]
 pub struct SteeringSettings {
-    pub default: StateSteeringSettings,
-    pub moving: StateSteeringSettings,
+    pub default: Option<StateSteeringSettings>,
+    pub moving: Option<StateSteeringSettings>,
 }
 
 impl Serialize for SteeringSettings {
@@ -14,8 +18,62 @@ impl Serialize for SteeringSettings {
         S: Serializer,
     {
         let mut s = serializer.serialize_struct("SteeringSettings", 2)?;
-        s.serialize_field("default", &self.default)?;
-        s.serialize_field("moving", &self.moving)?;
+        s.serialize_field(
+            "default",
+            &self.default.as_ref().unwrap_or(&StateSteeringSettings {
+                radius: None,
+                separation_factor: None,
+                separation_force: None,
+                force_unit_fuzzy_goto_behavior: false,
+            }),
+        )?;
+        s.serialize_field(
+            "moving",
+            &self.moving.as_ref().unwrap_or(&StateSteeringSettings {
+                radius: None,
+                separation_factor: None,
+                separation_force: None,
+                force_unit_fuzzy_goto_behavior: false,
+            }),
+        )?;
         s.end()
+    }
+}
+
+impl<'de> Deserialize<'de> for SteeringSettings {
+    fn deserialize<D>(deserializer: D) -> Result<SteeringSettings, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct SteeringSettingsVisitor;
+        impl<'de> Visitor<'de> for SteeringSettingsVisitor {
+            type Value = SteeringSettings;
+            fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+                formatter.write_str("SteeringSettings")
+            }
+            fn visit_map<V>(self, mut map: V) -> Result<Self::Value, V::Error>
+            where
+                V: MapAccess<'de>,
+            {
+                let mut default: Option<StateSteeringSettings> = None;
+                let mut moving: Option<StateSteeringSettings> = None;
+
+                while let Some(key) = map.next_key()? {
+                    match key {
+                        "default" => default = Some(map.next_value()?),
+                        "moving" => moving = Some(map.next_value()?),
+                        _ => {
+                            let _: IgnoredAny = map.next_value()?;
+                        }
+                    }
+                }
+
+                Ok(SteeringSettings {
+                    default: default,
+                    moving: moving,
+                })
+            }
+        }
+        deserializer.deserialize_map(SteeringSettingsVisitor)
     }
 }
