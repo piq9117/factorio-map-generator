@@ -1,6 +1,10 @@
+use serde::de::{IgnoredAny, MapAccess, Visitor};
 use serde::ser::SerializeStruct;
-use serde::{Serialize, Serializer};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
+use std::fmt;
+
+#[derive(Debug)]
 pub struct UnitGroupSettings {
     pub min_group_gathering_time: Option<u32>,
     pub max_group_gathering_time: Option<u32>,
@@ -70,5 +74,96 @@ impl Serialize for UnitGroupSettings {
             &self.max_unit_group_size.unwrap_or(0),
         )?;
         s.end()
+    }
+}
+
+impl<'de> Deserialize<'de> for UnitGroupSettings {
+    fn deserialize<D>(deserializer: D) -> Result<UnitGroupSettings, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct UnitGroupSettingsVisitor;
+        impl<'de> Visitor<'de> for UnitGroupSettingsVisitor {
+            type Value = UnitGroupSettings;
+            fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+                formatter.write_str("UnitGrouSettings")
+            }
+
+            fn visit_map<V>(self, mut map: V) -> Result<Self::Value, V::Error>
+            where
+                V: MapAccess<'de>,
+            {
+                let mut min_group_gathering_time: Option<u32> = None;
+                let mut max_group_gathering_time: Option<u32> = None;
+                let mut max_wait_time_for_late_members: Option<u32> = None;
+                let mut max_group_radius: Option<f32> = None;
+                let mut min_group_radius: Option<f32> = None;
+                let mut max_member_speedup_when_behind: Option<f32> = None;
+                let mut max_member_slowdown_when_ahead: Option<f32> = None;
+                let mut max_group_slowdown_factor: Option<f32> = None;
+                let mut max_group_member_fallback_factor: Option<f32> = None;
+                let mut member_disown_distance: Option<f32> = None;
+                let mut tick_tolerance_when_member_arrives: Option<u32> = None;
+                let mut max_gathering_unit_groups: Option<u32> = None;
+                let mut max_unit_group_size: Option<u32> = None;
+
+                while let Some(key) = map.next_key()? {
+                    match key {
+                        "min_group_gathering_time" => {
+                            min_group_gathering_time = Some(map.next_value()?)
+                        }
+                        "max_group_gathering_time" => {
+                            max_group_gathering_time = Some(map.next_value()?)
+                        }
+                        "max_wait_time_for_late_members" => {
+                            max_wait_time_for_late_members = Some(map.next_value()?)
+                        }
+                        "max_group_radius" => max_group_radius = Some(map.next_value()?),
+                        "min_group_radius" => min_group_radius = Some(map.next_value()?),
+                        "max_member_speedup_when_behind" => {
+                            max_member_speedup_when_behind = Some(map.next_value()?)
+                        }
+                        "max_member_slowdown_when_ahead" => {
+                            max_member_slowdown_when_ahead = Some(map.next_value()?)
+                        }
+                        "max_group_slowdown_factor" => {
+                            max_group_slowdown_factor = Some(map.next_value()?)
+                        }
+                        "max_group_member_fallback_factor" => {
+                            max_group_member_fallback_factor = Some(map.next_value()?)
+                        }
+                        "member_disown_distance" => {
+                            member_disown_distance = Some(map.next_value()?)
+                        }
+                        "tick_tolerance_when_member_arrives" => {
+                            tick_tolerance_when_member_arrives = Some(map.next_value()?)
+                        }
+                        "max_gathering_unit_groups" => {
+                            max_gathering_unit_groups = Some(map.next_value()?)
+                        }
+                        "max_unit_group_size" => max_unit_group_size = Some(map.next_value()?),
+                        _ => {
+                            let _: IgnoredAny = map.next_value()?;
+                        }
+                    }
+                }
+                Ok(UnitGroupSettings {
+                    min_group_gathering_time: min_group_gathering_time,
+                    max_group_gathering_time: max_group_gathering_time,
+                    max_wait_time_for_late_members: max_wait_time_for_late_members,
+                    max_group_radius: max_group_radius,
+                    min_group_radius: min_group_radius,
+                    max_member_speedup_when_behind: max_member_speedup_when_behind,
+                    max_member_slowdown_when_ahead: max_member_slowdown_when_ahead,
+                    max_group_slowdown_factor: max_group_slowdown_factor,
+                    max_group_member_fallback_factor: max_group_member_fallback_factor,
+                    member_disown_distance: member_disown_distance,
+                    tick_tolerance_when_member_arrives: tick_tolerance_when_member_arrives,
+                    max_gathering_unit_groups: max_gathering_unit_groups,
+                    max_unit_group_size: max_unit_group_size,
+                })
+            }
+        }
+        deserializer.deserialize_map(UnitGroupSettingsVisitor)
     }
 }
