@@ -86,7 +86,7 @@ impl<'de> Deserialize<'de> for UnitGroupSettings {
         impl<'de> Visitor<'de> for UnitGroupSettingsVisitor {
             type Value = UnitGroupSettings;
             fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-                formatter.write_str("UnitGrouSettings")
+                formatter.write_str("UnitGroupSettings")
             }
 
             fn visit_map<V>(self, mut map: V) -> Result<Self::Value, V::Error>
