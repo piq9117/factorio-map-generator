@@ -1,6 +1,11 @@
+use serde::de;
+use serde::de::{IgnoredAny, MapAccess, Visitor};
 use serde::ser::SerializeStruct;
-use serde::{Serialize, Serializer};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
+use std::fmt;
+
+#[derive(Debug)]
 pub struct PollutionSettings<'a> {
     pub enabled: bool,
     pub comment_min_to_diffuse_1: Option<&'a str>,
@@ -71,5 +76,102 @@ impl<'a> Serialize for PollutionSettings<'a> {
                 .unwrap_or(0.0),
         )?;
         s.end()
+    }
+}
+
+impl<'de> Deserialize<'de> for PollutionSettings<'de> {
+    fn deserialize<D>(deserializer: D) -> Result<PollutionSettings<'de>, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        struct PollutionSettingsVisitor;
+        impl<'de> Visitor<'de> for PollutionSettingsVisitor {
+            type Value = PollutionSettings<'de>;
+
+            fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+                formatter.write_str("PollutionSettings")
+            }
+
+            fn visit_map<V>(self, mut map: V) -> Result<Self::Value, V::Error>
+            where
+                V: MapAccess<'de>,
+            {
+                let mut enabled: Option<bool> = None;
+                let mut comment_min_to_diffuse_1: Option<&'de str> = None;
+                let mut comment_min_to_diffuse_2: Option<&'de str> = None;
+                let mut diffusion_ratio: Option<f32> = None;
+                let mut min_to_diffuse: Option<f32> = None;
+                let mut ageing: Option<f32> = None;
+                let mut expected_max_per_chunk: Option<f32> = None;
+                let mut min_to_show_per_chunk: Option<f32> = None;
+                let mut min_pollution_to_damage_trees: Option<f32> = None;
+                let mut pollution_with_max_forest_damage: Option<f32> = None;
+                let mut pollution_restored_per_tree_damage: Option<f32> = None;
+                let mut pollution_per_tree_damage: Option<f32> = None;
+                let mut max_pollution_to_restore_trees: Option<f32> = None;
+                let mut enemy_attack_pollution_consumption_modifier: Option<f32> = None;
+
+                while let Some(key) = map.next_key()? {
+                    match key {
+                        "enabled" => enabled = Some(map.next_value()?),
+                        "_comment_min_to_diffuse_1" => {
+                            comment_min_to_diffuse_1 = Some(map.next_value()?)
+                        }
+                        "_comment_min_to_diffuse_2" => {
+                            comment_min_to_diffuse_2 = Some(map.next_value()?)
+                        }
+                        "diffusion_ratio" => diffusion_ratio = Some(map.next_value()?),
+                        "min_to_diffuse" => min_to_diffuse = Some(map.next_value()?),
+                        "ageing" => ageing = Some(map.next_value()?),
+                        "expected_max_per_chunk" => {
+                            expected_max_per_chunk = Some(map.next_value()?)
+                        }
+                        "min_to_show_per_chunk" => min_to_show_per_chunk = Some(map.next_value()?),
+                        "min_pollution_to_damage_trees" => {
+                            min_pollution_to_damage_trees = Some(map.next_value()?)
+                        }
+                        "pollution_with_max_forest_damage" => {
+                            pollution_with_max_forest_damage = Some(map.next_value()?)
+                        }
+                        "pollution_restored_per_tree_damage" => {
+                            pollution_restored_per_tree_damage = Some(map.next_value()?)
+                        }
+                        "pollution_per_tree_damage" => {
+                            pollution_per_tree_damage = Some(map.next_value()?)
+                        }
+                        "max_pollution_to_restore_trees" => {
+                            max_pollution_to_restore_trees = Some(map.next_value()?)
+                        }
+                        "enemy_attack_pollution_consumption_modifier" => {
+                            enemy_attack_pollution_consumption_modifier = Some(map.next_value()?)
+                        }
+                        _ => {
+                            let _: IgnoredAny = map.next_value()?;
+                        }
+                    }
+                }
+
+                let enabled = enabled.ok_or_else(|| de::Error::missing_field("enabled"))?;
+
+                Ok(PollutionSettings {
+                    enabled: enabled,
+                    comment_min_to_diffuse_1: comment_min_to_diffuse_1,
+                    comment_min_to_diffuse_2: comment_min_to_diffuse_2,
+                    diffusion_ratio: diffusion_ratio,
+                    min_to_diffuse: min_to_diffuse,
+                    ageing: ageing,
+                    expected_max_per_chunk: expected_max_per_chunk,
+                    min_to_show_per_chunk: min_to_show_per_chunk,
+                    min_pollution_to_damage_trees: min_pollution_to_damage_trees,
+                    pollution_with_max_forest_damage: pollution_with_max_forest_damage,
+                    pollution_restored_per_tree_damage: pollution_restored_per_tree_damage,
+                    pollution_per_tree_damage: pollution_per_tree_damage,
+                    max_pollution_to_restore_trees: max_pollution_to_restore_trees,
+                    enemy_attack_pollution_consumption_modifier:
+                        enemy_attack_pollution_consumption_modifier,
+                })
+            }
+        }
+        deserializer.deserialize_map(PollutionSettingsVisitor)
     }
 }
