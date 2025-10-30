@@ -4,7 +4,7 @@ use std::fs::{read_to_string, File};
 
 mod settings;
 use settings::default::mk_default_settings;
-use settings::steering::SteeringSettings;
+use settings::path_finder::PathFinderSettings;
 
 fn main() -> std::io::Result<()> {
     let file_with_path = env::current_dir()?.join("map-settings.json");
@@ -13,9 +13,9 @@ fn main() -> std::io::Result<()> {
 
     serde_json::to_writer(file, &map_settings)?;
 
-    let json_file = read_to_string("steering.json")?;
-    let steering: SteeringSettings = serde_json::from_str(&json_file)?;
-    println!("{:?}", steering);
+    let json_file = read_to_string("path-finder.json")?;
+    let path_finder: PathFinderSettings = serde_json::from_str(&json_file)?;
+    println!("{:?}", path_finder);
 
     Ok(())
 }
