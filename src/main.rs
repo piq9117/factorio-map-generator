@@ -4,7 +4,7 @@ use std::fs::{read_to_string, File};
 
 mod settings;
 use settings::default::mk_default_settings;
-use settings::pollution::PollutionSettings;
+use settings::unit_group::UnitGroupSettings;
 
 fn main() -> std::io::Result<()> {
     let file_with_path = env::current_dir()?.join("map-settings.json");
@@ -13,9 +13,9 @@ fn main() -> std::io::Result<()> {
 
     serde_json::to_writer(file, &map_settings)?;
 
-    let json_file = read_to_string("pollution.json")?;
-    let pollution: PollutionSettings = serde_json::from_str(&json_file)?;
-    println!("{:?}", pollution);
+    let json_file = read_to_string("unit-group.json")?;
+    let unit_group: UnitGroupSettings = serde_json::from_str(&json_file)?;
+    println!("{:?}", unit_group);
 
     Ok(())
 }
