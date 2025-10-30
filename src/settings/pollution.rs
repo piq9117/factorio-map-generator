@@ -28,7 +28,7 @@ impl<'a> Serialize for PollutionSettings<'a> {
     where
         S: Serializer,
     {
-        let mut s = serializer.serialize_struct("Polluion", 2)?;
+        let mut s = serializer.serialize_struct("Pollution", 2)?;
         s.serialize_field("enabled", &self.enabled)?;
         s.serialize_field(
             "_comment_min_to_diffuse_1",
