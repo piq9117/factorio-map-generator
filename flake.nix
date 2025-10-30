@@ -17,10 +17,19 @@
       nixpkgsFor = forAllSystems(system: import nixpkgs {
         inherit system;
         overlays = [self.overlays (import rust-overlay)];
+        config = {
+          allowUnfree = true;
+        };
       });
     in {
       overlays = final: prev: {
-
+        factorio-headless = prev.factorio-headless.overrideAttrs(old: {
+          postInstall = ''
+            substituteInPlace $out/bin/factorio-headless \
+              --replace '__PATH__system-read-data__' "$out/share/factorio/data" \
+              --replace '__PATH__system-write-data__' "$out/share/factorio"
+          '';
+        });
       };
 
       packages = forAllSystems(system: 
@@ -38,6 +47,7 @@
             CARGO_BUILD_TARGET = "x86_64-unknown-linux-musl";
             CARGO_BUILD_RUSTFLAGS = "-C target-feature=+crt-static";
           };
+          factorio-headless = pkgs.factorio-headless;
         });
 
       devShells = forAllSystems(system: 
@@ -51,6 +61,7 @@
               rust-analyzer
               rustfmt
               treefmt
+              factorio-headless
             ];
             shellHook = ''
               export PS1='[$PWD]\n❄ '
