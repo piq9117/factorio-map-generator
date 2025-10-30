@@ -2,8 +2,7 @@ use crate::settings::{
     asteroids::AsteroidSettings, difficulty::DifficultySettings,
     enemy_evolution::EnemyEvolutionSettings, enemy_expansion::EnemyExpansionSettings,
     map::MapSettings, path_finder::PathFinderSettings, pollution::PollutionSettings,
-    state_steering::StateSteeringSettings, steering::SteeringSettings,
-    unit_group::UnitGroupSettings,
+    steering::SteeringSettings, unit_group::UnitGroupSettings,
 };
 
 pub fn mk_default_settings() -> MapSettings<'static> {
@@ -29,18 +28,8 @@ pub fn mk_default_settings() -> MapSettings<'static> {
             enemy_attack_pollution_consumption_modifier: None,
         },
         steering: SteeringSettings {
-            default: StateSteeringSettings {
-                radius: None,
-                separation_factor: None,
-                separation_force: None,
-                force_unit_fuzzy_goto_behavior: false,
-            },
-            moving: StateSteeringSettings {
-                radius: None,
-                separation_factor: None,
-                separation_force: None,
-                force_unit_fuzzy_goto_behavior: false,
-            },
+            default: None,
+            moving: None,
         },
         enemy_evolution: EnemyEvolutionSettings {
             enabled: false,

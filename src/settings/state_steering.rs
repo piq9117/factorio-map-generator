@@ -5,6 +5,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 use std::fmt;
 
+#[derive(Debug)]
 pub struct StateSteeringSettings {
     pub radius: Option<f32>,
     pub separation_factor: Option<f32>,
@@ -51,7 +52,7 @@ impl<'de> Deserialize<'de> for StateSteeringSettings {
                 let mut separation_force: Option<f32> = Some(0.0);
                 let mut force_unit_fuzzy_goto_behavior: Option<bool> = None;
 
-                while let Some(key) = map.next_value()? {
+                while let Some(key) = map.next_key()? {
                     match key {
                         "radius" => radius = Some(map.next_value()?),
                         "separation_factor" => separation_factor = Some(map.next_value()?),
