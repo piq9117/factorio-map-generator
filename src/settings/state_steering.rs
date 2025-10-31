@@ -103,7 +103,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn default_state_steering() {
+    fn default_state_steering_settings() {
         insta::assert_yaml_snapshot!(StateSteeringSettings::default());
     }
 }

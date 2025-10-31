@@ -201,7 +201,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn default_enemy_expansion() {
+    fn default_enemy_expansion_settings() {
         insta::assert_yaml_snapshot!(EnemyExpansionSettings::default());
     }
 }

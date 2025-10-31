@@ -16,3 +16,16 @@ pub fn gen_settings(map_settings: Option<MapSettings>) -> MapSettings {
         Some(map_settings) => map_settings,
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn default_gen_settings() {
+        let map_settings = gen_settings(None);
+        let json = serde_json::to_string(&map_settings).unwrap();
+        insta::assert_snapshot!(json);
+
+    }
+}

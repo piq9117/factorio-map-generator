@@ -202,7 +202,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn default_pollution() {
+    fn default_pollution_settings() {
         insta::assert_yaml_snapshot!(PollutionSettings::default());
     }
 }
