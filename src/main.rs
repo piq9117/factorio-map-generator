@@ -6,8 +6,10 @@ use std::path;
 
 use clap::Parser;
 
+mod gen_settings;
+use crate::gen_settings::gen_settings;
+
 mod settings;
-use settings::default::gen_settings;
 use settings::map::MapSettings;
 
 mod cli;
