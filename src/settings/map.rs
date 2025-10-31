@@ -138,6 +138,6 @@ mod tests {
 
     #[test]
     fn default_map_settings() {
-        insta::assert_yaml_snapshot!(MapSettings::default());
+        insta::assert_json_snapshot!(MapSettings::default());
     }
 }

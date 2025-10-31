@@ -438,6 +438,6 @@ mod tests {
 
     #[test]
     fn default_path_finder_settings() {
-        insta::assert_yaml_snapshot!(PathFinderSettings::default())
+        insta::assert_json_snapshot!(PathFinderSettings::default())
     }
 }

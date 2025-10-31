@@ -2,5 +2,7 @@
 source: src/settings/difficulty.rs
 expression: "DifficultySettings::default()"
 ---
-technology_price_multiplier: 0.001
-spoil_time_modifier: 0
+{
+  "technology_price_multiplier": 0.001,
+  "spoil_time_modifier": 0.0
+}

@@ -83,6 +83,6 @@ mod test {
 
     #[test]
     fn default_difficulty_settings() {
-        insta::assert_yaml_snapshot!(DifficultySettings::default());
+        insta::assert_json_snapshot!(DifficultySettings::default());
     }
 }
