@@ -62,6 +62,7 @@
               rustfmt
               treefmt
               factorio-headless
+              cargo-insta
             ];
             shellHook = ''
               export PS1='[$PWD]\n❄ '

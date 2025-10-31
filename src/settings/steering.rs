@@ -70,3 +70,13 @@ impl<'de> Deserialize<'de> for SteeringSettings {
         deserializer.deserialize_map(SteeringSettingsVisitor)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn default_steering() {
+        insta::assert_yaml_snapshot!(SteeringSettings::default());
+    }
+}

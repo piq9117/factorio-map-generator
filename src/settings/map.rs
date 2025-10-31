@@ -24,6 +24,22 @@ pub struct MapSettings {
     pub asteroids: Option<AsteroidSettings>,
 }
 
+impl Default for MapSettings {
+    fn default() -> Self {
+        MapSettings {
+            difficulty_settings: Some(DifficultySettings::default()),
+            pollution: Some(PollutionSettings::default()),
+            steering: Some(SteeringSettings::default()),
+            enemy_evolution: Some(EnemyEvolutionSettings::default()),
+            enemy_expansion: Some(EnemyExpansionSettings::default()),
+            unit_group: Some(UnitGroupSettings::default()),
+            path_finder: Some(PathFinderSettings::default()),
+            max_failed_behavior_count: Some(0),
+            asteroids: Some(AsteroidSettings::default()),
+        }
+    }
+}
+
 impl<'a> Serialize for MapSettings {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -113,5 +129,15 @@ impl<'de> Deserialize<'de> for MapSettings {
             }
         }
         deserializer.deserialize_map(MapSettingsVisitor)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn default_map() {
+        insta::assert_yaml_snapshot!(MapSettings::default());
     }
 }

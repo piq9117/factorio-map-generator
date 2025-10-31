@@ -196,3 +196,13 @@ impl<'de> Deserialize<'de> for PollutionSettings {
         deserializer.deserialize_map(PollutionSettingsVisitor)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn default_pollution() {
+        insta::assert_yaml_snapshot!(PollutionSettings::default());
+    }
+}

@@ -195,3 +195,13 @@ impl<'de> Deserialize<'de> for EnemyExpansionSettings {
         deserializer.deserialize_map(EnemyExpansionSettingsVisitor)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn default_enemy_expansion() {
+        insta::assert_yaml_snapshot!(EnemyExpansionSettings::default());
+    }
+}

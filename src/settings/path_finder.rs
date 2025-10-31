@@ -431,3 +431,13 @@ impl<'de> Deserialize<'de> for PathFinderSettings {
         deserializer.deserialize_map(PathFinderSettingsVisitor)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn default_path_finder() {
+        insta::assert_yaml_snapshot!(PathFinderSettings::default())
+    }
+}

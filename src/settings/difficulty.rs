@@ -76,3 +76,13 @@ impl<'de> Deserialize<'de> for DifficultySettings {
         deserializer.deserialize_map(DifficultySettingsVisitor)
     }
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn default_difficulty() {
+        insta::assert_yaml_snapshot!(DifficultySettings::default());
+    }
+}

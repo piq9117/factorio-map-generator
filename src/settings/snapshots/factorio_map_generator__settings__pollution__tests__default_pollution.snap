@@ -1,0 +1,18 @@
+---
+source: src/settings/pollution.rs
+expression: "PollutionSettings::default()"
+---
+enabled: false
+_comment_min_to_diffuse_1: ""
+_comment_min_to_diffuse_2: ""
+diffusion_ratio: 0
+min_to_diffuse: 0
+ageing: 0
+expected_max_per_chunk: 0
+min_to_show_per_chunk: 0
+min_pollution_to_damage_trees: 0
+pollution_with_max_forest_damage: 0
+pollution_restored_per_tree_damage: 0
+pollution_per_tree_damage: 0
+max_pollution_to_restore_trees: 0
+enemy_attack_pollution_consumption_modifier: 0

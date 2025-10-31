@@ -1,0 +1,6 @@
+---
+source: src/settings/asteroids.rs
+expression: "AsteroidSettings::default()"
+---
+spawning_rate: 0
+max_ray_portals_expanded_per_tick: 0
