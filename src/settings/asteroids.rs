@@ -1,6 +1,7 @@
 use serde::de::{IgnoredAny, MapAccess, Visitor};
 use serde::ser::SerializeStruct;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
+
 use std::fmt;
 
 #[derive(Debug, Clone)]
@@ -24,10 +25,10 @@ impl Serialize for AsteroidSettings {
         S: Serializer,
     {
         let mut s = serializer.serialize_struct("AsteroidSettings", 2)?;
-        s.serialize_field("spawning_rate", &self.spawning_rate.unwrap_or(0.0))?;
+        s.serialize_field("spawning_rate", &self.spawning_rate.unwrap_or_default())?;
         s.serialize_field(
             "max_ray_portals_expanded_per_tick",
-            &self.max_ray_portals_expanded_per_tick.unwrap_or(0),
+            &self.max_ray_portals_expanded_per_tick.unwrap_or_default(),
         )?;
         s.end()
     }
@@ -71,5 +72,16 @@ impl<'de> Deserialize<'de> for AsteroidSettings {
             }
         }
         deserializer.deserialize_map(AsteroidSettingsVisitor)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn default_asteroids() {
+        let default_asteroids = AsteroidSettings::default();
+        insta::assert_yaml_snapshot!(default_asteroids);
     }
 }
