@@ -80,7 +80,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn default_asteroids() {
+    fn default_asteroids_settings() {
         insta::assert_yaml_snapshot!(AsteroidSettings::default());
     }
 }

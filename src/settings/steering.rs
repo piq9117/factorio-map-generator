@@ -76,7 +76,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn default_steering() {
+    fn default_steering_settings() {
         insta::assert_yaml_snapshot!(SteeringSettings::default());
     }
 }

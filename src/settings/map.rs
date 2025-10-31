@@ -137,7 +137,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn default_map() {
+    fn default_map_settings() {
         insta::assert_yaml_snapshot!(MapSettings::default());
     }
 }

@@ -437,7 +437,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn default_path_finder() {
+    fn default_path_finder_settings() {
         insta::assert_yaml_snapshot!(PathFinderSettings::default())
     }
 }

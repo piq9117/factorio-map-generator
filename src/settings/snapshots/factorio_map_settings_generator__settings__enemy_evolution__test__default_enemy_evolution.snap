@@ -1,0 +1,8 @@
+---
+source: src/settings/enemy_evolution.rs
+expression: default_enemy_evolution
+---
+enabled: false
+time_factor: 0
+destroy_factor: 0
+pollution_factor: 0

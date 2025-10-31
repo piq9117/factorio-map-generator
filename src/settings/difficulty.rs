@@ -82,7 +82,7 @@ mod test {
     use super::*;
 
     #[test]
-    fn default_difficulty() {
+    fn default_difficulty_settings() {
         insta::assert_yaml_snapshot!(DifficultySettings::default());
     }
 }
