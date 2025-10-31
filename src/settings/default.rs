@@ -1,6 +1,6 @@
 use crate::settings::map::MapSettings;
 
-pub fn gen_settings() -> MapSettings<'static> {
+pub fn gen_settings() -> MapSettings {
     return MapSettings {
         difficulty_settings: None,
         pollution: None,

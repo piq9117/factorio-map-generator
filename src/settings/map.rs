@@ -12,9 +12,9 @@ use crate::settings::{
 };
 
 #[derive(Debug)]
-pub struct MapSettings<'a> {
+pub struct MapSettings {
     pub difficulty_settings: Option<DifficultySettings>,
-    pub pollution: Option<PollutionSettings<'a>>,
+    pub pollution: Option<PollutionSettings>,
     pub steering: Option<SteeringSettings>,
     pub enemy_evolution: Option<EnemyEvolutionSettings>,
     pub enemy_expansion: Option<EnemyExpansionSettings>,
@@ -24,7 +24,7 @@ pub struct MapSettings<'a> {
     pub asteroids: Option<AsteroidSettings>,
 }
 
-impl<'a> Serialize for MapSettings<'a> {
+impl<'a> Serialize for MapSettings {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -46,14 +46,14 @@ impl<'a> Serialize for MapSettings<'a> {
     }
 }
 
-impl<'de> Deserialize<'de> for MapSettings<'de> {
-    fn deserialize<D>(deserializer: D) -> Result<MapSettings<'de>, D::Error>
+impl<'de> Deserialize<'de> for MapSettings {
+    fn deserialize<D>(deserializer: D) -> Result<MapSettings, D::Error>
     where
         D: Deserializer<'de>,
     {
         struct MapSettingsVisitor;
         impl<'de> Visitor<'de> for MapSettingsVisitor {
-            type Value = MapSettings<'de>;
+            type Value = MapSettings;
             fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
                 formatter.write_str("MapSettings")
             }
@@ -63,7 +63,7 @@ impl<'de> Deserialize<'de> for MapSettings<'de> {
                 V: MapAccess<'de>,
             {
                 let mut difficulty_settings: Option<DifficultySettings> = None;
-                let mut pollution: Option<PollutionSettings<'de>> = None;
+                let mut pollution: Option<PollutionSettings> = None;
                 let mut steering: Option<SteeringSettings> = None;
                 let mut enemy_evolution: Option<EnemyEvolutionSettings> = None;
                 let mut enemy_expansion: Option<EnemyExpansionSettings> = None;
