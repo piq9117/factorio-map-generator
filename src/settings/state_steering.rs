@@ -97,3 +97,13 @@ impl<'de> Deserialize<'de> for StateSteeringSettings {
         deserializer.deserialize_map(StateSteeringSettingsVisitor)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn default_state_steering() {
+        insta::assert_yaml_snapshot!(StateSteeringSettings::default());
+    }
+}
