@@ -187,3 +187,13 @@ impl<'de> Deserialize<'de> for UnitGroupSettings {
         deserializer.deserialize_map(UnitGroupSettingsVisitor)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn default_unit_group_settings() {
+        insta::assert_yaml_snapshot!(UnitGroupSettings::default());
+    }
+}
