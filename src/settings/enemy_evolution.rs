@@ -87,3 +87,14 @@ impl<'de> Deserialize<'de> for EnemyEvolutionSettings {
         deserializer.deserialize_map(EnemyEvolutionSettingsVisitor)
     }
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn default_enemy_evolution() {
+        let default_enemy_evolution = EnemyEvolutionSettings::default();
+        insta::assert_yaml_snapshot!(default_enemy_evolution);
+    }
+}
