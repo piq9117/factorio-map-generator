@@ -6,10 +6,10 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use std::fmt;
 
 #[derive(Debug)]
-pub struct PollutionSettings<'a> {
+pub struct PollutionSettings {
     pub enabled: bool,
-    pub comment_min_to_diffuse_1: Option<&'a str>,
-    pub comment_min_to_diffuse_2: Option<&'a str>,
+    pub comment_min_to_diffuse_1: Option<String>,
+    pub comment_min_to_diffuse_2: Option<String>,
     pub diffusion_ratio: Option<f32>,
     pub min_to_diffuse: Option<f32>,
     pub ageing: Option<f32>,
@@ -23,7 +23,7 @@ pub struct PollutionSettings<'a> {
     pub enemy_attack_pollution_consumption_modifier: Option<f32>,
 }
 
-impl<'a> Serialize for PollutionSettings<'a> {
+impl Serialize for PollutionSettings {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -32,11 +32,17 @@ impl<'a> Serialize for PollutionSettings<'a> {
         s.serialize_field("enabled", &self.enabled)?;
         s.serialize_field(
             "_comment_min_to_diffuse_1",
-            &self.comment_min_to_diffuse_1.unwrap_or(""),
+            &self
+                .comment_min_to_diffuse_1
+                .clone()
+                .unwrap_or("".to_string()),
         )?;
         s.serialize_field(
             "_comment_min_to_diffuse_2",
-            &self.comment_min_to_diffuse_2.unwrap_or(""),
+            &self
+                .comment_min_to_diffuse_2
+                .clone()
+                .unwrap_or("".to_string()),
         )?;
         s.serialize_field("diffusion_ratio", &self.diffusion_ratio.unwrap_or(0.0))?;
         s.serialize_field("min_to_diffuse", &self.min_to_diffuse.unwrap_or(0.0))?;
@@ -79,14 +85,14 @@ impl<'a> Serialize for PollutionSettings<'a> {
     }
 }
 
-impl<'de> Deserialize<'de> for PollutionSettings<'de> {
-    fn deserialize<D>(deserializer: D) -> Result<PollutionSettings<'de>, D::Error>
+impl<'de> Deserialize<'de> for PollutionSettings {
+    fn deserialize<D>(deserializer: D) -> Result<PollutionSettings, D::Error>
     where
         D: Deserializer<'de>,
     {
         struct PollutionSettingsVisitor;
         impl<'de> Visitor<'de> for PollutionSettingsVisitor {
-            type Value = PollutionSettings<'de>;
+            type Value = PollutionSettings;
 
             fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
                 formatter.write_str("PollutionSettings")
@@ -97,8 +103,8 @@ impl<'de> Deserialize<'de> for PollutionSettings<'de> {
                 V: MapAccess<'de>,
             {
                 let mut enabled: Option<bool> = None;
-                let mut comment_min_to_diffuse_1: Option<&'de str> = None;
-                let mut comment_min_to_diffuse_2: Option<&'de str> = None;
+                let mut comment_min_to_diffuse_1: Option<String> = None;
+                let mut comment_min_to_diffuse_2: Option<String> = None;
                 let mut diffusion_ratio: Option<f32> = None;
                 let mut min_to_diffuse: Option<f32> = None;
                 let mut ageing: Option<f32> = None;
