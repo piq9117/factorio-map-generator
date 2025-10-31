@@ -1,4 +1,4 @@
-# factorio-map-generator
+# factorio-map-settings-generator
 
 
 Don't look in here. I'm still trying to learn this dumb language.
