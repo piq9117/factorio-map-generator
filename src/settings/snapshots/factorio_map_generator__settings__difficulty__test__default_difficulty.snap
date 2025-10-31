@@ -1,6 +1,6 @@
 ---
 source: src/settings/difficulty.rs
-expression: default_difficulty
+expression: "DifficultySettings::default()"
 ---
 technology_price_multiplier: 0.001
 spoil_time_modifier: 0

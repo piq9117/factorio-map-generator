@@ -83,7 +83,6 @@ mod test {
 
     #[test]
     fn default_difficulty() {
-        let default_difficulty = DifficultySettings::default();
-        insta::assert_yaml_snapshot!(default_difficulty);
+        insta::assert_yaml_snapshot!(DifficultySettings::default());
     }
 }

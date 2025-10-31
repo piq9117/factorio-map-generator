@@ -1,6 +1,5 @@
 ---
 source: src/settings/enemy_evolution.rs
-assertion_line: 98
 expression: default_enemy_evolution
 ---
 enabled: false
