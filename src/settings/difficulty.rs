@@ -3,7 +3,7 @@ use serde::ser::SerializeStruct;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use std::fmt;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct DifficultySettings {
     pub technology_price_multiplier: Option<f32>,
     pub spoil_time_modifier: Option<f32>,
@@ -24,6 +24,15 @@ impl Serialize for DifficultySettings {
             &self.spoil_time_modifier.unwrap_or(0.0),
         )?;
         s.end()
+    }
+}
+
+impl Default for DifficultySettings {
+    fn default() -> Self {
+        DifficultySettings {
+            technology_price_multiplier: Some(0.001),
+            spoil_time_modifier: Some(0.0),
+        }
     }
 }
 

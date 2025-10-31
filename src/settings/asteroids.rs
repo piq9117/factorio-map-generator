@@ -3,10 +3,19 @@ use serde::ser::SerializeStruct;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use std::fmt;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct AsteroidSettings {
     pub spawning_rate: Option<f32>,
     pub max_ray_portals_expanded_per_tick: Option<u32>,
+}
+
+impl Default for AsteroidSettings {
+    fn default() -> Self {
+        AsteroidSettings {
+            spawning_rate: Some(0.0),
+            max_ray_portals_expanded_per_tick: Some(0),
+        }
+    }
 }
 
 impl Serialize for AsteroidSettings {

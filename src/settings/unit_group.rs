@@ -4,7 +4,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 use std::fmt;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct UnitGroupSettings {
     pub min_group_gathering_time: Option<u32>,
     pub max_group_gathering_time: Option<u32>,
@@ -19,6 +19,26 @@ pub struct UnitGroupSettings {
     pub tick_tolerance_when_member_arrives: Option<u32>,
     pub max_gathering_unit_groups: Option<u32>,
     pub max_unit_group_size: Option<u32>,
+}
+
+impl Default for UnitGroupSettings {
+    fn default() -> Self {
+        UnitGroupSettings {
+            min_group_gathering_time: Some(0),
+            max_group_gathering_time: Some(0),
+            max_wait_time_for_late_members: Some(0),
+            max_group_radius: Some(0.0),
+            min_group_radius: Some(0.0),
+            max_member_speedup_when_behind: Some(0.0),
+            max_member_slowdown_when_ahead: Some(0.0),
+            max_group_slowdown_factor: Some(0.0),
+            max_group_member_fallback_factor: Some(0.0),
+            member_disown_distance: Some(0.0),
+            tick_tolerance_when_member_arrives: Some(0),
+            max_gathering_unit_groups: Some(0),
+            max_unit_group_size: Some(0),
+        }
+    }
 }
 
 impl Serialize for UnitGroupSettings {

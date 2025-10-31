@@ -1,0 +1,10 @@
+{
+  "difficulty_settings": {
+    "technology_price_multiplier": 1.0,
+    "spoil_time_modifier": 1.0
+  },
+  "pollution": {
+    "enabled": true,
+    "_comment_min_to_diffuse_1": "hello"
+  }
+}
