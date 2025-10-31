@@ -5,7 +5,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 use std::fmt;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct PathFinderSettings {
     pub fwd2bwd_ratio: Option<u32>,
     pub goal_pressure_ratio: Option<f32>,
@@ -40,6 +40,46 @@ pub struct PathFinderSettings {
     pub overload_levels: Option<Vec<u32>>,
     pub overload_multipliers: Option<Vec<f32>>,
     pub negative_path_cache_delay_interval: Option<u32>,
+}
+
+impl Default for PathFinderSettings {
+    fn default() -> Self {
+        PathFinderSettings {
+            fwd2bwd_ratio: Some(0),
+            goal_pressure_ratio: Some(0.0),
+            use_path_cache: false,
+            max_steps_worked_per_tick: Some(0.0),
+            max_work_done_per_tick: Some(0),
+            short_cache_size: Some(0),
+            long_cache_size: Some(0),
+            short_cache_min_cacheable_distance: Some(0.0),
+            short_cache_min_algo_steps_to_cache: Some(0),
+            long_cache_min_cacheable_distance: Some(0.0),
+            cache_max_connect_to_cache_steps_multiplier: Some(0),
+            cache_accept_path_start_distance_ratio: Some(0.0),
+            cache_accept_path_end_distance_ratio: Some(0.0),
+            negative_cache_accept_path_start_distance_ratio: Some(0.0),
+            negative_cache_accept_path_end_distance_ratio: Some(0.0),
+            cache_path_start_distance_rating_multiplier: Some(0.0),
+            cache_path_end_distance_rating_multiplier: Some(0.0),
+            stale_enemy_with_same_destination_collision_penalty: Some(0.0),
+            ignore_moving_enemy_collision_distance: Some(0.0),
+            enemy_with_different_destination_collision_penalty: Some(0.0),
+            general_entity_collision_penalty: Some(0.0),
+            general_entity_subsequent_collision_penalty: Some(0.0),
+            extended_collision_penalty: Some(0.0),
+            max_clients_to_accept_any_new_request: Some(0),
+            max_clients_to_accept_short_new_request: Some(0),
+            direct_distance_to_consider_short_request: Some(0),
+            short_request_max_steps: Some(0),
+            short_request_ratio: Some(0.0),
+            min_steps_to_check_path_find_termination: Some(0),
+            start_to_goal_cost_multiplier_to_terminate_path_find: Some(0.0),
+            overload_levels: Some(vec![0]),
+            overload_multipliers: Some(vec![0.0]),
+            negative_path_cache_delay_interval: Some(0),
+        }
+    }
 }
 
 impl Serialize for PathFinderSettings {

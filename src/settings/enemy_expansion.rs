@@ -4,7 +4,7 @@ use serde::ser::SerializeStruct;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use std::fmt;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct EnemyExpansionSettings {
     pub enabled: bool,
     pub max_expansion_distance: Option<u32>,
@@ -19,6 +19,26 @@ pub struct EnemyExpansionSettings {
     pub settler_group_max_size: Option<u32>,
     pub min_expansion_cooldown: Option<u32>,
     pub max_expansion_cooldown: Option<u32>,
+}
+
+impl Default for EnemyExpansionSettings {
+    fn default() -> Self {
+        EnemyExpansionSettings {
+            enabled: false,
+            max_expansion_distance: Some(0),
+            friendly_base_influence_radius: Some(0),
+            enemy_building_influence_radius: Some(0),
+            building_coefficient: Some(0.0),
+            other_base_coefficient: Some(0.0),
+            neighbouring_chunk_coefficient: Some(0.0),
+            neighbouring_base_chunk_coefficient: Some(0.0),
+            max_colliding_tiles_coefficient: Some(0.0),
+            settler_group_min_size: Some(0),
+            settler_group_max_size: Some(0),
+            min_expansion_cooldown: Some(0),
+            max_expansion_cooldown: Some(0),
+        }
+    }
 }
 
 impl Serialize for EnemyExpansionSettings {
@@ -42,39 +62,39 @@ impl Serialize for EnemyExpansionSettings {
         )?;
         s.serialize_field(
             "building_coefficient",
-            &self.building_coefficient.unwrap_or(0.0),
+            &self.building_coefficient.unwrap_or_default(),
         )?;
         s.serialize_field(
             "other_base_coefficient",
-            &self.other_base_coefficient.unwrap_or(0.0),
+            &self.other_base_coefficient.unwrap_or_default(),
         )?;
         s.serialize_field(
             "neighbouring_chunk_coefficient",
-            &self.neighbouring_chunk_coefficient.unwrap_or(0.0),
+            &self.neighbouring_chunk_coefficient.unwrap_or_default(),
         )?;
         s.serialize_field(
             "neighbouring_base_chunk_coefficient",
-            &self.neighbouring_base_chunk_coefficient.unwrap_or(0.0),
+            &self.neighbouring_base_chunk_coefficient.unwrap_or_default(),
         )?;
         s.serialize_field(
             "max_colliding_tiles_coefficient",
-            &self.max_colliding_tiles_coefficient.unwrap_or(0.0),
+            &self.max_colliding_tiles_coefficient.unwrap_or_default(),
         )?;
         s.serialize_field(
             "settler_group_min_size",
-            &self.settler_group_min_size.unwrap_or(0),
+            &self.settler_group_min_size.unwrap_or_default(),
         )?;
         s.serialize_field(
             "settler_group_max_size",
-            &self.settler_group_max_size.unwrap_or(0),
+            &self.settler_group_max_size.unwrap_or_default(),
         )?;
         s.serialize_field(
             "min_expansion_cooldown",
-            &self.min_expansion_cooldown.unwrap_or(0),
+            &self.min_expansion_cooldown.unwrap_or_default(),
         )?;
         s.serialize_field(
             "max_expansion_cooldown",
-            &self.max_expansion_cooldown.unwrap_or(0),
+            &self.max_expansion_cooldown.unwrap_or_default(),
         )?;
         s.end()
     }

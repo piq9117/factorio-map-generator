@@ -5,12 +5,23 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 use std::fmt;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct StateSteeringSettings {
     pub radius: Option<f32>,
     pub separation_factor: Option<f32>,
     pub separation_force: Option<f32>,
     pub force_unit_fuzzy_goto_behavior: bool,
+}
+
+impl Default for StateSteeringSettings {
+    fn default() -> Self {
+        StateSteeringSettings {
+            radius: Some(0.0),
+            separation_factor: Some(0.0),
+            separation_force: Some(0.0),
+            force_unit_fuzzy_goto_behavior: false,
+        }
+    }
 }
 
 impl Serialize for StateSteeringSettings {
@@ -19,9 +30,15 @@ impl Serialize for StateSteeringSettings {
         S: Serializer,
     {
         let mut s = serializer.serialize_struct("StateSteerSettigs", 4)?;
-        s.serialize_field("radius", &self.radius.unwrap_or(0.0))?;
-        s.serialize_field("separation_factor", &self.separation_factor.unwrap_or(0.0))?;
-        s.serialize_field("separation_force", &self.separation_force.unwrap_or(0.0))?;
+        s.serialize_field("radius", &self.radius.unwrap_or_default())?;
+        s.serialize_field(
+            "separation_factor",
+            &self.separation_factor.unwrap_or_default(),
+        )?;
+        s.serialize_field(
+            "separation_force",
+            &self.separation_force.unwrap_or_default(),
+        )?;
         s.serialize_field(
             "force_unit_fuzzy_goto_behavior",
             &self.force_unit_fuzzy_goto_behavior,

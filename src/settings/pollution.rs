@@ -5,7 +5,7 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 use std::fmt;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct PollutionSettings {
     pub enabled: bool,
     pub comment_min_to_diffuse_1: Option<String>,
@@ -23,6 +23,27 @@ pub struct PollutionSettings {
     pub enemy_attack_pollution_consumption_modifier: Option<f32>,
 }
 
+impl Default for PollutionSettings {
+    fn default() -> Self {
+        PollutionSettings {
+            enabled: false,
+            comment_min_to_diffuse_1: Some("".to_string()),
+            comment_min_to_diffuse_2: Some("".to_string()),
+            diffusion_ratio: Some(0.0),
+            min_to_diffuse: Some(0.0),
+            ageing: Some(0.0),
+            expected_max_per_chunk: Some(0.0),
+            min_to_show_per_chunk: Some(0.0),
+            min_pollution_to_damage_trees: Some(0.0),
+            pollution_with_max_forest_damage: Some(0.0),
+            pollution_restored_per_tree_damage: Some(0.0),
+            pollution_per_tree_damage: Some(0.0),
+            max_pollution_to_restore_trees: Some(0.0),
+            enemy_attack_pollution_consumption_modifier: Some(0.0),
+        }
+    }
+}
+
 impl Serialize for PollutionSettings {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -32,54 +53,48 @@ impl Serialize for PollutionSettings {
         s.serialize_field("enabled", &self.enabled)?;
         s.serialize_field(
             "_comment_min_to_diffuse_1",
-            &self
-                .comment_min_to_diffuse_1
-                .clone()
-                .unwrap_or("".to_string()),
+            &self.comment_min_to_diffuse_1.clone().unwrap_or_default(),
         )?;
         s.serialize_field(
             "_comment_min_to_diffuse_2",
-            &self
-                .comment_min_to_diffuse_2
-                .clone()
-                .unwrap_or("".to_string()),
+            &self.comment_min_to_diffuse_2.clone().unwrap_or_default(),
         )?;
-        s.serialize_field("diffusion_ratio", &self.diffusion_ratio.unwrap_or(0.0))?;
-        s.serialize_field("min_to_diffuse", &self.min_to_diffuse.unwrap_or(0.0))?;
-        s.serialize_field("ageing", &self.ageing.unwrap_or(0.0))?;
+        s.serialize_field("diffusion_ratio", &self.diffusion_ratio.unwrap_or_default())?;
+        s.serialize_field("min_to_diffuse", &self.min_to_diffuse.unwrap_or_default())?;
+        s.serialize_field("ageing", &self.ageing.unwrap_or_default())?;
         s.serialize_field(
             "expected_max_per_chunk",
-            &self.expected_max_per_chunk.unwrap_or(0.0),
+            &self.expected_max_per_chunk.unwrap_or_default(),
         )?;
         s.serialize_field(
             "min_to_show_per_chunk",
-            &self.min_to_show_per_chunk.unwrap_or(0.0),
+            &self.min_to_show_per_chunk.unwrap_or_default(),
         )?;
         s.serialize_field(
             "min_pollution_to_damage_trees",
-            &self.min_pollution_to_damage_trees.unwrap_or(0.0),
+            &self.min_pollution_to_damage_trees.unwrap_or_default(),
         )?;
         s.serialize_field(
             "pollution_with_max_forest_damage",
-            &self.pollution_with_max_forest_damage.unwrap_or(0.0),
+            &self.pollution_with_max_forest_damage.unwrap_or_default(),
         )?;
         s.serialize_field(
             "pollution_restored_per_tree_damage",
-            &self.pollution_restored_per_tree_damage.unwrap_or(0.0),
+            &self.pollution_restored_per_tree_damage.unwrap_or_default(),
         )?;
         s.serialize_field(
             "pollution_per_tree_damage",
-            &self.pollution_per_tree_damage.unwrap_or(0.0),
+            &self.pollution_per_tree_damage.unwrap_or_default(),
         )?;
         s.serialize_field(
             "max_pollution_to_restore_trees",
-            &self.max_pollution_to_restore_trees.unwrap_or(0.0),
+            &self.max_pollution_to_restore_trees.unwrap_or_default(),
         )?;
         s.serialize_field(
             "enemy_attack_pollution_consumption_modifier",
             &self
                 .enemy_attack_pollution_consumption_modifier
-                .unwrap_or(0.0),
+                .unwrap_or_default(),
         )?;
         s.end()
     }

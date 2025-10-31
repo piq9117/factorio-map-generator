@@ -16,17 +16,13 @@ use cli::Cli;
 fn main() -> std::io::Result<()> {
     let args = Cli::parse();
 
-    get_map_settings_override(&args.map_settings)?;
+    let map_settings = get_map_settings_override(&args.map_settings)?;
 
     let file_with_path = env::current_dir()?.join("map-settings.json");
     let file = File::create(file_with_path)?;
-    let map_settings = gen_settings();
+    let map_settings = gen_settings(map_settings);
 
     serde_json::to_writer(file, &map_settings)?;
-
-    let json_file = read_to_string("map.json")?;
-    let map: MapSettings = serde_json::from_str(&json_file)?;
-    println!("{:?}", map);
 
     Ok(())
 }

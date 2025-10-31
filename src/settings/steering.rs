@@ -6,10 +6,19 @@ use std::fmt;
 
 use crate::settings::state_steering::StateSteeringSettings;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct SteeringSettings {
     pub default: Option<StateSteeringSettings>,
     pub moving: Option<StateSteeringSettings>,
+}
+
+impl Default for SteeringSettings {
+    fn default() -> Self {
+        SteeringSettings {
+            default: Default::default(),
+            moving: Default::default(),
+        }
+    }
 }
 
 impl Serialize for SteeringSettings {
@@ -18,24 +27,8 @@ impl Serialize for SteeringSettings {
         S: Serializer,
     {
         let mut s = serializer.serialize_struct("SteeringSettings", 2)?;
-        s.serialize_field(
-            "default",
-            &self.default.as_ref().unwrap_or(&StateSteeringSettings {
-                radius: None,
-                separation_factor: None,
-                separation_force: None,
-                force_unit_fuzzy_goto_behavior: false,
-            }),
-        )?;
-        s.serialize_field(
-            "moving",
-            &self.moving.as_ref().unwrap_or(&StateSteeringSettings {
-                radius: None,
-                separation_factor: None,
-                separation_force: None,
-                force_unit_fuzzy_goto_behavior: false,
-            }),
-        )?;
+        s.serialize_field("default", &self.default.clone().unwrap_or_default())?;
+        s.serialize_field("moving", &self.moving.clone().unwrap_or_default())?;
         s.end()
     }
 }

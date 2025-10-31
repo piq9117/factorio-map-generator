@@ -4,12 +4,23 @@ use serde::ser::SerializeStruct;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use std::fmt;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct EnemyEvolutionSettings {
     pub enabled: bool,
     pub time_factor: Option<f32>,
     pub destroy_factor: Option<f32>,
     pub pollution_factor: Option<f32>,
+}
+
+impl Default for EnemyEvolutionSettings {
+    fn default() -> Self {
+        EnemyEvolutionSettings {
+            enabled: false,
+            time_factor: Some(0.0),
+            destroy_factor: Some(0.0),
+            pollution_factor: Some(0.0),
+        }
+    }
 }
 
 impl Serialize for EnemyEvolutionSettings {
@@ -19,9 +30,12 @@ impl Serialize for EnemyEvolutionSettings {
     {
         let mut s = serializer.serialize_struct("EnemyEvolutionSettings", 4)?;
         s.serialize_field("enabled", &self.enabled)?;
-        s.serialize_field("time_factor", &self.time_factor.unwrap_or(0.0))?;
-        s.serialize_field("destroy_factor", &self.destroy_factor.unwrap_or(0.0))?;
-        s.serialize_field("pollution_factor", &self.pollution_factor.unwrap_or(0.0))?;
+        s.serialize_field("time_factor", &self.time_factor.unwrap_or_default())?;
+        s.serialize_field("destroy_factor", &self.destroy_factor.unwrap_or_default())?;
+        s.serialize_field(
+            "pollution_factor",
+            &self.pollution_factor.unwrap_or_default(),
+        )?;
         s.end()
     }
 }

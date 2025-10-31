@@ -30,18 +30,27 @@ impl<'a> Serialize for MapSettings {
         S: Serializer,
     {
         let mut s = serializer.serialize_struct("MapSettings", 2)?;
-        s.serialize_field("difficulty_settings", &self.difficulty_settings)?;
-        s.serialize_field("pollution", &self.pollution)?;
-        s.serialize_field("steering", &self.steering)?;
-        s.serialize_field("enemy_evolution", &self.enemy_evolution)?;
-        s.serialize_field("enemy_expansion", &self.enemy_expansion)?;
-        s.serialize_field("unit_group", &self.unit_group)?;
-        s.serialize_field("path_finder", &self.path_finder)?;
+        s.serialize_field(
+            "difficulty_settings",
+            &self.difficulty_settings.clone().unwrap_or_default(),
+        )?;
+        s.serialize_field("pollution", &self.pollution.clone().unwrap_or_default())?;
+        s.serialize_field("steering", &self.steering.clone().unwrap_or_default())?;
+        s.serialize_field(
+            "enemy_evolution",
+            &self.enemy_evolution.clone().unwrap_or_default(),
+        )?;
+        s.serialize_field(
+            "enemy_expansion",
+            &self.enemy_expansion.clone().unwrap_or_default(),
+        )?;
+        s.serialize_field("unit_group", &self.unit_group.clone().unwrap_or_default())?;
+        s.serialize_field("path_finder", &self.path_finder.clone().unwrap_or_default())?;
         s.serialize_field(
             "max_failed_behavior_count",
-            &self.max_failed_behavior_count.unwrap_or(0),
+            &self.max_failed_behavior_count.unwrap_or_default(),
         )?;
-        s.serialize_field("asteroids", &self.asteroids)?;
+        s.serialize_field("asteroids", &self.asteroids.clone().unwrap_or_default())?;
         s.end()
     }
 }
