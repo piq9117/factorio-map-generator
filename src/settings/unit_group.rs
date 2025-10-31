@@ -194,6 +194,6 @@ mod tests {
 
     #[test]
     fn default_unit_group_settings() {
-        insta::assert_yaml_snapshot!(UnitGroupSettings::default());
+        insta::assert_json_snapshot!(UnitGroupSettings::default());
     }
 }

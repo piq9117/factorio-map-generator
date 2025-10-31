@@ -2,7 +2,9 @@
 source: src/settings/state_steering.rs
 expression: "StateSteeringSettings::default()"
 ---
-radius: 0
-separation_factor: 0
-separation_force: 0
-force_unit_fuzzy_goto_behavior: false
+{
+  "radius": 0.0,
+  "separation_factor": 0.0,
+  "separation_force": 0.0,
+  "force_unit_fuzzy_goto_behavior": false
+}

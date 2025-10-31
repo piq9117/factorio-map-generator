@@ -202,6 +202,6 @@ mod tests {
 
     #[test]
     fn default_enemy_expansion_settings() {
-        insta::assert_yaml_snapshot!(EnemyExpansionSettings::default());
+        insta::assert_json_snapshot!(EnemyExpansionSettings::default());
     }
 }

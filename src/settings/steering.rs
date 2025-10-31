@@ -77,6 +77,6 @@ mod tests {
 
     #[test]
     fn default_steering_settings() {
-        insta::assert_yaml_snapshot!(SteeringSettings::default());
+        insta::assert_json_snapshot!(SteeringSettings::default());
     }
 }

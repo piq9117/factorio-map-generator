@@ -23,9 +23,6 @@ mod tests {
 
     #[test]
     fn default_gen_settings() {
-        let map_settings = gen_settings(None);
-        let json = serde_json::to_string(&map_settings).unwrap();
-        insta::assert_snapshot!(json);
-
+        insta::assert_json_snapshot!(gen_settings(None));
     }
 }

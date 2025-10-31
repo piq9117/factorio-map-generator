@@ -81,6 +81,6 @@ mod tests {
 
     #[test]
     fn default_asteroids_settings() {
-        insta::assert_yaml_snapshot!(AsteroidSettings::default());
+        insta::assert_json_snapshot!(AsteroidSettings::default());
     }
 }

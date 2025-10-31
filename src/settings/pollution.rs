@@ -203,6 +203,6 @@ mod tests {
 
     #[test]
     fn default_pollution_settings() {
-        insta::assert_yaml_snapshot!(PollutionSettings::default());
+        insta::assert_json_snapshot!(PollutionSettings::default());
     }
 }

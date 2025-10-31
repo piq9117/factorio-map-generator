@@ -95,6 +95,6 @@ mod test {
     #[test]
     fn default_enemy_evolution_settings() {
         let default_enemy_evolution = EnemyEvolutionSettings::default();
-        insta::assert_yaml_snapshot!(default_enemy_evolution);
+        insta::assert_json_snapshot!(default_enemy_evolution);
     }
 }

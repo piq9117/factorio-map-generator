@@ -2,13 +2,17 @@
 source: src/settings/steering.rs
 expression: "SteeringSettings::default()"
 ---
-default:
-  radius: 0
-  separation_factor: 0
-  separation_force: 0
-  force_unit_fuzzy_goto_behavior: false
-moving:
-  radius: 0
-  separation_factor: 0
-  separation_force: 0
-  force_unit_fuzzy_goto_behavior: false
+{
+  "default": {
+    "radius": 0.0,
+    "separation_factor": 0.0,
+    "separation_force": 0.0,
+    "force_unit_fuzzy_goto_behavior": false
+  },
+  "moving": {
+    "radius": 0.0,
+    "separation_factor": 0.0,
+    "separation_force": 0.0,
+    "force_unit_fuzzy_goto_behavior": false
+  }
+}
